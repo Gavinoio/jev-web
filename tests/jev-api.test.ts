@@ -2,7 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { callBox, callJev } from '../utils/jev.ts'
 import { batchQuestions, batchSamples, moderateExamples, moderateQuestions, scenarios } from '../utils/scenarios.ts'
-import { boxImages, typeTabs } from '../utils/typeDemos.ts'
+import { boxImages, typeTabs, typeDemoExamples } from '../utils/typeDemos.ts'
 import { shiftExamples, shiftQuestions, initialMemory, decide, force, promote } from '../utils/shift.ts'
 
 test('all presets return deterministic mock answers in the expected shape without network', async () => {
@@ -48,6 +48,28 @@ test('all presets return deterministic mock answers in the expected shape withou
       assert.ok(box.left >= 0 && box.left < box.right && box.right <= 1 && box.top >= 0 && box.top < box.bottom && box.bottom <= 1)
     }
   } finally { globalThis.fetch = originalFetch }
+})
+
+test('presentation presets share one ticket across all three text question types', async () => {
+  assert.equal(typeDemoExamples.length, 3)
+  assert.equal(new Set(typeDemoExamples.map((example) => example.state)).size, 1)
+  assert.ok(typeDemoExamples.every((example) => example.label === '礼包扣款'))
+  const results = await Promise.all(typeTabs.map((tab, index) => callJev(typeDemoExamples[index].state, tab.questions)))
+  assert.ok(results.every((result) => result.ok))
+  assert.equal(results[0].data.answers.is_urgent.noul, 0.95)
+  assert.equal(results[1].data.answers.department.choice, 'billing')
+  assert.equal(results[2].data.answers.frustration.score, 2)
+  const ticket = scenarios[0]
+  assert.deepEqual(Object.assign({}, ...typeTabs.map((tab) => tab.questions)), ticket.questions)
+  assert.equal(ticket.examples[1].state, typeDemoExamples[0].state)
+  const clear = await callJev(ticket.examples[1].state, ticket.questions)
+  assert.deepEqual(clear.data.answers.is_urgent, results[0].data.answers.is_urgent)
+  assert.deepEqual(clear.data.answers.department, results[1].data.answers.department)
+  assert.deepEqual(clear.data.answers.frustration, results[2].data.answers.frustration)
+  const ambiguous = await callJev(ticket.examples[3].state, ticket.questions)
+  assert.ok(clear.ok && ambiguous.ok)
+  assert.ok(clear.data.answers.department.confidence >= 0.9)
+  assert.ok(ambiguous.data.answers.department.confidence < 0.7)
 })
 
 test('unsupported input, changed questions and boxes fail honestly', async () => {

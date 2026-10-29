@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, onBeforeUnmount } from 'vue'
 import { callJev, callBox, pct, type JevResult } from '../utils/jev'
-import { typeTabs, boxImages } from '../utils/typeDemos'
+import { typeTabs, typeDemoExamples, boxImages } from '../utils/typeDemos'
 
 // 四个标签：是非 / 单选 / 打分（文字材料）+ 框选 box（图片）。每个标签：左边材料 + 题目，右边返回
 const ti = ref(0) // 0..2 文字题型，3 = box
@@ -59,19 +59,16 @@ const questionError = computed(() => validateQuestions(questionsText.value))
 const activeQuestions = computed<Record<string, any>>(() => questionError.value ? tab.value.questions : JSON.parse(questionsText.value))
 
 // ---- 文字题型 ----
-const ei = ref(0)
-const state = ref(typeTabs[0].examples[0].state)
+const state = ref(typeDemoExamples[0].state)
 const res = ref<JevResult | null>(null)
 const loading = ref(false)
 let requestId = 0
 let controller: AbortController | null = null
-const ex = computed(() => tab.value.examples[ei.value])
-function pickEx(i: number) { ei.value = i; state.value = tab.value.examples[i].state; res.value = null }
 function pickTab(i: number) {
   ti.value = i
   res.value = null
-  if (i < 3) { ei.value = 0; state.value = typeTabs[i].examples[0].state }
-  else { bres.value = null }
+  if (i < 3) state.value = typeDemoExamples[i].state
+  else bres.value = null
 }
 async function run() {
   if (questionError.value) return
@@ -89,19 +86,16 @@ watch([state, ti, questionsText], () => { requestId++; controller?.abort(); load
 const ans = computed(() => res.value?.data?.answers)
 
 // ---- box ----
-const ii = ref(0)
-const ci = ref(0)
-const img = computed(() => boxImages[ii.value])
-const target = ref(boxImages[0].targets[0].target)
+const img = boxImages[0]
+const targetIndex = ref(0)
+const target = computed(() => img.targets[targetIndex.value].target)
 const bres = ref<JevResult | null>(null)
 const bloading = ref(false)
 let boxRequestId = 0
 let boxController: AbortController | null = null
-function pickImg(i: number) { ii.value = i; ci.value = 0; target.value = boxImages[i].targets[0].target; bres.value = null }
-function pickTarget(i: number) { ci.value = i; target.value = img.value.targets[i].target; bres.value = null }
 const boxQuestions = computed(() => ({
-  visible: { type: 'noul', instructions: `Is the following visible in \`photo\`: ${target.value}?` },
-  target: { type: 'box', instructions: `${target.value} in \`photo\`` },
+  visible: { type: 'noul', instructions: `图片 \`photo\` 中是否能看到${target.value}？` },
+  target: { type: 'box', instructions: `定位图片 \`photo\` 中的${target.value}` },
 }))
 async function runBox() {
   const id = ++boxRequestId
@@ -109,10 +103,10 @@ async function runBox() {
   boxController = new AbortController()
   bloading.value = true
   bres.value = null
-  const response = await callBox(img.value.src.split('/').pop()!, target.value, boxController.signal)
+  const response = await callBox(img.src.split('/').pop()!, target.value, boxController.signal)
   if (id === boxRequestId) { bres.value = response; bloading.value = false }
 }
-watch([ii, target], () => { boxRequestId++; boxController?.abort(); bloading.value = false; bres.value = null }, { flush: 'sync' })
+watch([targetIndex, ti], () => { boxRequestId++; boxController?.abort(); bloading.value = false; bres.value = null }, { flush: 'sync' })
 onBeforeUnmount(() => { controller?.abort(); boxController?.abort() })
 const bAns = computed(() => bres.value?.data?.answers)
 const bBox = computed(() => bAns.value?.target?.box as { top: number; bottom: number; left: number; right: number } | undefined)
@@ -122,7 +116,6 @@ const rectStyle = computed(() => {
   if (!b) return null
   return { left: b.left * 100 + '%', top: b.top * 100 + '%', width: (b.right - b.left) * 100 + '%', height: (b.bottom - b.top) * 100 + '%' }
 })
-const note = computed(() => img.value.targets[ci.value]?.note)
 </script>
 <template>
   <div class="demo pg">
@@ -136,13 +129,11 @@ const note = computed(() => img.value.targets[ci.value]?.note)
     <!-- 文字题型 -->
     <div v-if="!isBox" class="pgrid">
       <div class="pl">
-        <div class="dlabel">STATE</div>
-        <textarea v-model="state" rows="3" class="st" />
+        <div class="dlabel">STATE · 同一条工单，比较三种判断方式</div>
+        <textarea v-model="state" rows="3" class="st" aria-label="演示材料" />
         <div class="chips">
-          <button v-for="(e, i) in tab.examples" :key="i" class="chip" :class="{ on: ei === i }" @click="pickEx(i)">{{ e.label }}</button>
           <button class="run" :disabled="loading || !!questionError" @click="run">{{ loading ? '判定中…' : res && !res.ok ? '↻ 重试请求' : 'Run request' }}</button>
         </div>
-        <div v-if="ex.note" class="exp none"><span class="expn">{{ ex.note }}</span></div>
         <div class="dlabel">QUESTIONS</div>
         <div class="qbox question-editor">
           <div class="qedit-wrap">
@@ -165,22 +156,15 @@ const note = computed(() => img.value.targets[ci.value]?.note)
     <!-- box -->
     <div v-else class="pgrid">
       <div class="pl">
-        <div class="dlabel">STATE · 图片（先选图，再选要找的目标）</div>
+        <div class="dlabel">STATE · 同一张图片，选择要定位的目标</div>
         <div class="boxwrap">
-          <img :src="img.src" />
+          <img :src="img.src" alt="包含搜索栏、数字区块和机器人的网页界面示意图" />
           <div v-if="rectStyle" class="rect" :style="rectStyle"><span>{{ pct(Number(bAns?.target?.confidence ?? 0)) }}</span></div>
         </div>
         <div class="chips">
-          <button v-for="(m, i) in boxImages" :key="m.id" class="chip" :class="{ on: ii === i }" @click="pickImg(i)">{{ m.name }}</button>
-        </div>
-        <div class="chips">
-          <button v-for="(t, i) in img.targets" :key="t.target" class="chip" :class="{ on: ci === i }" @click="pickTarget(i)">{{ t.label }}</button>
-        </div>
-        <div class="chips">
-          <input v-model="target" class="tin" placeholder="仅支持预设目标的完整文字" aria-label="定位目标（仅支持预设目标）" />
+          <button v-for="(item, index) in img.targets" :key="item.target" class="chip" :class="{ on: targetIndex === index }" :aria-pressed="targetIndex === index" @click="targetIndex = index">{{ item.label }}</button>
           <button class="run" :disabled="bloading" @click="runBox">{{ bloading ? '定位中…' : bres && !bres.ok ? '↻ 重试定位' : 'Run request' }}</button>
         </div>
-        <div v-if="note" class="exp none"><b>看点</b><span class="expn">{{ note }}</span></div>
       </div>
       <div class="pr ticket-response">
         <div class="dlabel">QUESTIONS · 一个 box + 一道配套的是非题</div>

@@ -4,10 +4,9 @@ import { callJev, pct, type JevResult } from '../utils/jev'
 import { scenarios } from '../utils/scenarios'
 
 // 类似官方 Playground：左边 STATE + QUESTIONS（可改），右边 RESPONSE；示例自带"参考答案"
-const si = ref(0)
-const sc = computed(() => scenarios[si.value])
-const ei = ref(0)
-const state = ref(scenarios[0].examples[0].state)
+const sc = scenarios[0]
+const ei = ref(1)
+const state = ref(sc.examples[1].state)
 const stateInput = ref<HTMLTextAreaElement | null>(null)
 const stateHighlight = ref<HTMLElement | null>(null)
 function formatJson(value: string) {
@@ -49,26 +48,21 @@ const lo = ref(0.7)
 let requestId = 0
 let controller: AbortController | null = null
 
-const ex = computed(() => sc.value.examples[ei.value])
-const visibleExamples = computed(() => {
-  const indices = si.value === 0 ? [0, 1, 3] : si.value === 1 ? [0, 1, 3] : [1, 2, 3]
-  return indices.map((index) => ({ ...sc.value.examples[index], index, shortLabel: si.value === 2 ? ['普通退款', 'VIP 退款', '普通含糊'][indices.indexOf(index)] : sc.value.examples[index].label }))
-})
-function pickExample(i: number) {
-  ei.value = i
-  state.value = formatJson(sc.value.examples[i].state)
+const ex = computed(() => sc.examples[ei.value])
+const visibleExamples = [
+  { ...sc.examples[1], index: 1, shortLabel: '明确工单 · 礼包扣款' },
+  { ...sc.examples[3], index: 3, shortLabel: '含糊工单 · 礼包异常' },
+]
+function pickExample(index: number) {
+  ei.value = index
+  state.value = formatJson(sc.examples[index].state)
   res.value = null
   err.value = ''
-}
-function pickScenario(i: number) {
-  si.value = i
-  qText.value = JSON.stringify(scenarios[i].questions, null, 2)
-  pickExample(i === 2 ? 1 : 0)
 }
 const questions = computed<Record<string, any> | null>(() => {
   try { const q = JSON.parse(qText.value); return q && typeof q === 'object' ? q : null } catch { return null }
 })
-const pristine = computed(() => formatJson(state.value) === formatJson(ex.value.state) && qText.value === JSON.stringify(sc.value.questions, null, 2))
+const pristine = computed(() => formatJson(state.value) === formatJson(ex.value.state) && qText.value === JSON.stringify(sc.questions, null, 2))
 
 async function run() {
   err.value = ''
@@ -87,7 +81,7 @@ watch([state, qText], () => { requestId++; controller?.abort(); loading.value = 
 onBeforeUnmount(() => controller?.abort())
 
 const ans = computed(() => res.value?.data?.answers)
-const main = computed(() => (pristine.value ? sc.value.main : undefined))
+const main = computed(() => (pristine.value ? sc.main : undefined))
 const mainAns = computed(() => (main.value ? ans.value?.[main.value] : undefined))
 const conf = computed(() => {
   const a = mainAns.value
@@ -107,8 +101,8 @@ const route = computed(() => {
   <div class="demo pg">
     <DemoModeBar title="DEMO 2 · 工单分流" :ms="res?.wall" />
     <div class="tabs">
-      <button v-for="(s, i) in scenarios" :key="s.id" class="tab" :class="{ on: si === i }" @click="pickScenario(i)">{{ s.name }}</button>
-      <span class="tabnote">{{ sc.intro }}</span>
+      <span class="dtitle">工单分流</span>
+      <span class="tabnote">沿用前面的工单：一次判断紧急程度、处理部门和情绪，再演示分流</span>
     </div>
     <div class="pgrid">
       <div class="pl">
@@ -121,7 +115,7 @@ const route = computed(() => {
           <button v-for="e in visibleExamples" :key="e.index" class="chip" :class="{ on: ei === e.index }" @click="pickExample(e.index)">{{ e.shortLabel }}</button>
           <button class="run" :disabled="loading" @click="run">{{ loading ? '判定中…' : res && !res.ok ? '↻ 重试请求' : 'Run request' }}</button>
         </div>
-        <div class="dlabel">QUESTIONS</div>
+        <div class="dlabel">QUESTIONS · 是非 + 单选 + 评分，一次提交</div>
         <div class="qbox ticket-question-box">
           <QView :questions="sc.questions" compact hide-legend />
         </div>

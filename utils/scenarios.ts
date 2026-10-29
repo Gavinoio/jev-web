@@ -20,7 +20,7 @@ export const ticketQuestions = {
   department: {
     type: 'choice',
     instructions: '应该由哪个团队处理？',
-    criteria: { billing: '付款、扣费、退款、对账', technical: '故障、连不上、集成报错', sales: '价格、套餐、新签约' },
+    criteria: { billing: '付款、扣费、退款、对账', technical: '故障、连不上、集成报错', sales: '价格、套餐、新签约', other: '以上都不是' },
   },
   frustration: { type: 'score', instructions: '客户有多沮丧？', criteria: ['冷静陈述', '不满但礼貌', '非常愤怒'] },
 }
@@ -65,6 +65,11 @@ const vipState = (message: string, level: string, orders: number, spent: number)
   "customer": ${JSON.stringify({ level, orders_last_year: orders, total_spent_cny: spent }).replace(/,/g, ', ').replace(/:/g, ': ')}
 }`
 
+export const demoTicketExamples = {
+  clear: { label: '礼包扣款', state: '买礼包扣了两次钱，道具还没到账！活动马上结束了，赶紧处理，太让人失望了！', expected: { is_urgent: true, department: 'billing', frustration: 2 }, note: '预设演示：账单诉求明确，同时包含时间压力与不满情绪' },
+  ambiguous: { label: '礼包异常', state: '礼包好像不对，价格变了，东西也找不到，帮我看看。', note: '预设演示：涉及价格、内容或功能，模拟低置信度并建议人工复核' },
+}
+
 export const scenarios: Scenario[] = [
   {
     id: 'ticket',
@@ -74,9 +79,9 @@ export const scenarios: Scenario[] = [
     main: 'department',
     examples: [
       { label: '扣了两次款', state: '我的月订阅被扣了两次款。可以帮我核对这两笔付款吗？', expected: { is_urgent: false, department: 'billing', frustration: 0 }, note: '看点：很笃定 → 自动分流' },
-      { label: '接口报 500', state: '你们的接口从早上开始一直报 500，生产环境全挂了，请马上处理！！', expected: { is_urgent: true, department: 'technical', frustration: 2 }, note: '看点：紧急 97%，沮丧分很高' },
+      demoTicketExamples.clear,
       { label: '骂产品+退款慢', state: '你们这个产品太垃圾了，退款流程还要等三天，真是浪费时间。', expected: { is_urgent: false, department: 'billing', frustration: 2 }, note: '看点：部门明确，但情绪最高档 → 该有人出面' },
-      { label: '涨价了？', state: '你们的套餐是不是涨价了？之前的功能怎么用不了了。', note: '没有标准答案：销售 / 技术 / 账单都沾边 → 它拿不准，把握度低，该转人工' },
+      demoTicketExamples.ambiguous,
       { label: '帮我看看这个', state: '帮我看看这个。', note: '没有标准答案：材料太短，它也会硬选一个，而且可能很自信 → 要留"其他"出口，要先检查材料够不够' },
     ],
   },

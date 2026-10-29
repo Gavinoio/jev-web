@@ -37,40 +37,40 @@ class: agenda-slide
 # 今天的路线
 
 <div class="agenda-page">
-  <div class="agenda-subtitle">AGENDA · 从了解 Jev 到实际应用</div>
+  <div class="agenda-subtitle">AGENDA · 从 AI 基础到认识 Jev，再到实际应用</div>
 
   <div class="agenda-grid">
     <article class="agenda-item">
-      <div class="agenda-item-heading"><span>01</span><h2>先备知识</h2></div>
-      <p>了解 AI 基础概念</p>
+      <div class="agenda-item-heading"><span>01</span><h2>AI 基础知识</h2></div>
+      <p>大模型 · Token · Prompt · Agent</p>
     </article>
     <article class="agenda-item">
-      <div class="agenda-item-heading"><span>02</span><h2>认识 Jev</h2></div>
-      <p>是什么 · 怎么工作</p>
+      <div class="agenda-item-heading"><span>02</span><h2>认识 Jev 与判断结果</h2></div>
+      <p>模型定位 · 四种题型 · 输入输出</p>
     </article>
     <article class="agenda-item">
-      <div class="agenda-item-heading"><span>03</span><h2>核心优势</h2></div>
-      <p>快 · 省 · 准</p>
+      <div class="agenda-item-heading"><span>03</span><h2>为什么值得比较</h2></div>
+      <p>延迟 · 成本 · 把握度</p>
     </article>
     <article class="agenda-item">
-      <div class="agenda-item-heading"><span>04</span><h2>真实案例</h2></div>
-      <p>看看实际表现</p>
+      <div class="agenda-item-heading"><span>04</span><h2>外部案例</h2></div>
+      <p>Agent · 新闻筛选 · 招聘初筛</p>
     </article>
     <article class="agenda-item">
-      <div class="agenda-item-heading"><span>05</span><h2>应用场景</h2></div>
-      <p>适合解决什么问题</p>
+      <div class="agenda-item-heading"><span>05</span><h2>我们的业务怎么试</h2></div>
+      <p>方案选型 · 接口与字段 · 写题与验证</p>
     </article>
     <article class="agenda-item">
-      <div class="agenda-item-heading"><span>06</span><h2>上手与落地</h2></div>
-      <p>实际操作与使用边界</p>
+      <div class="agenda-item-heading"><span>06</span><h2>交互压轴与总结</h2></div>
+      <p>变形输入框 · 从判断到行动</p>
     </article>
   </div>
 
   <div class="agenda-highlights">
     <article class="agenda-highlight agenda-highlight--demo">
-      <div class="agenda-label"><span class="agenda-icon" aria-hidden="true">▶</span>LIVE DEMO ×5</div>
-      <h2>现场演示</h2>
-      <p>通过工单分流、即时判断、批量分类等案例，直观体验 Jev 的能力。</p>
+      <div class="agenda-label"><span class="agenda-icon" aria-hidden="true">▶</span>INTERACTIVE DEMO ×3</div>
+      <h2>交互演示 · 离线预设</h2>
+      <p>看懂题型、工单分流和变形输入框；不作为模型性能测试。</p>
     </article>
     <article class="agenda-highlight agenda-highlight--point">
       <div class="agenda-label"><span class="agenda-icon" aria-hidden="true">✦</span>THE POINT</div>
@@ -80,7 +80,7 @@ class: agenda-slide
     <article class="agenda-highlight agenda-highlight--reality">
       <div class="agenda-label"><span class="agenda-icon" aria-hidden="true">⚖</span>REALITY CHECK</div>
       <h2>客观看待</h2>
-      <p>结合公开资料与实际测试，看看 Jev 的优势、局限和适用场景。</p>
+      <p>区分官方披露、作者实验与现场离线模拟，了解能力、局限和适用场景。</p>
     </article>
   </div>
 
@@ -88,7 +88,8 @@ class: agenda-slide
 </div>
 
 <!--
-按六个主题带过议程。强调三件事：会看到 5 个现场演示；全程围绕“哪些任务只需要模型判断或选择”这个问题；优劣与适用边界会结合公开资料和实际测试说明。
+按六个主题带过议程：先用五页对齐 AI 基础，再介绍 Jev 的定位、题型与输入输出，接着比较延迟、成本和把握度，结合外部案例讨论选型、接口使用与验证落地，最后用变形输入框和总结收束。三个交互演示分别展示输出形式、分流和自适应 UI，全部是离线预设，不调用真实 Jev。
+外部案例保留来源和测量边界。今天不是证明 Jev 总比其他方案强，而是识别值得验证的判断任务。
 -->
 
 ---
@@ -112,7 +113,7 @@ class: agenda-slide
 
 <!--
 类比：输入法联想。你打"今天天气真"，输入法给你一排候选，大模型就是把这件事一个字一个字重复几百次。
-点一下候选词演示"采样"。关键句：Jev 只做第一步——打概率，然后就停。
+点一下候选词演示“采样”。这只是帮助理解逐步生成的简化示意，不等同于披露 Jev 内部实现；后者的重点是返回限定的判断结果，而不是生成长篇文本。
 -->
 
 ---
@@ -140,8 +141,8 @@ class: agenda-slide
 <div class="takeaway">给模型的材料不是越多越好：<b>保留与问题相关的内容，再用实际样本验证效果。</b></div>
 
 <!--
-类比：token 就像按字节计费的流量，上下文就像会议室白板，写满只能擦掉最早的。
-埋伏笔：后面讲"省"，省的就是输出 token。
+Token 可以类比计量单位，但不等同于字或字节；上下文像容量有限的白板，超长输入如何处理取决于服务与应用。
+回到工单：提供客户描述和必要订单信息，不必发送全部历史。材料和题目都可能计入输入费用，后面比较的是总成本，不只是输出 token。
 -->
 
 ---
@@ -286,14 +287,14 @@ class: toolchain-slide
 
 <!--
 按顺序指三张卡：MCP 解决连接，例子是读取 GitHub Issue；Skill 整理可复用的任务方法，例子是按团队规范审查代码；Harness 负责把多步任务、工具调用和上下文组织起来，Claude Code 是例子。
-收尾念底部一句话，然后过渡到 Jev：有了 Agent 和工具链的背景，我们来看一个专门负责判断的模型。
+收尾补一句：连接工具、任务方法和运行系统各有分工。基础知识到这里对齐，接下来正式认识 Jev：它在这个系统里负责什么，又不负责什么？
 -->
 
 ---
 
 # Jev 是什么：专门做判断的 AI
 
-<div class="eyebrow">认识 Jev · 它是什么</div>
+<div class="eyebrow">认识 Jev · 从 AI 基础回到判断任务</div>
 
 <div class="cols c2" style="align-items:center">
 <div>
@@ -301,27 +302,28 @@ class: toolchain-slide
 </div>
 <div class="jev-definition-cards">
 <section class="card">
-  <div class="tag">01 · 它是什么?</div>
+  <div class="tag">01 · 它是什么？</div>
   <h3>专门做快速判断的 AI 模型</h3>
-  <p>Jev 是 TypeSafe AI 推出的 System One 模型，不需要生成长篇回答，而是直接返回程序能够使用的判断结果。</p>
+  <p>Jev 是 TypeSafe AI 推出的 System One 模型，返回程序可用的判断结果，而不是长篇回答。</p>
 </section>
 <section class="card">
-  <div class="tag">02 · 它能做什么?</div>
-  <h3>选择、评分、判断概率</h3>
-  <p>比如给工单分类、评估风险高低，或者判断某个条件是否成立。</p>
+  <div class="tag">02 · 用一个工单贯穿今天</div>
+  <h3>“充值后没到账，该找谁？”</h3>
+  <p>程序需要的是部门、紧急程度和复核信号，不一定需要一段客服回复。</p>
 </section>
 <section class="card">
-  <div class="tag">03 · 它不能做什么?</div>
-  <h3>不负责聊天和创作</h3>
-  <p>它不用于写文章、生成代码或自由对话，更适合有明确判断目标的任务。</p>
+  <div class="tag">03 · 它不是什么？</div>
+  <h3>不是聊天助手，也不是完整 Agent</h3>
+  <p>不负责写文章或执行退款；它给判断，程序按规则决定后续动作。</p>
 </section>
 </div>
 </div>
 
-<div class="takeaway">ChatGPT 擅长生成内容，Jev 擅长直接做判断。它不是要取代 ChatGPT，而是专注做好其中一类任务。</div>
+<div class="takeaway">Jev 做判断，程序定动作。接下来看看：这些判断能用哪些题型表达，又会返回什么结果？</div>
 
 <!--
-按顺序讲三张卡：Jev 是 TypeSafe AI 推出的 System One，负责提供程序可用的判断结果；它适合做选择、评分和概率判断，不负责聊天与创作。最后用底部一句话收束。
+基础概念已经对齐，现在介绍 Jev 的定位。用玩家充值不到账举例：部门分类和是否紧急是判断，回复用户是生成，查询订单和退款是工具与业务动作。今天用客服工单串起这些差别。
+过渡：明确它负责判断、不负责执行之后，下一页看四种题型和对应输出。
 -->
 
 ---
@@ -364,56 +366,16 @@ class: toolchain-slide
 class: demo-slide demo-types-slide
 ---
 
-# 🔴 现场演示 1：四种题型
+# 交互演示 1：看懂四种输出
 
-<div class="eyebrow">认识 Jev · 现场演示</div>
+<div class="eyebrow">认识 Jev · 离线预设，只看结果形式</div>
 
 <DemoTypes />
 
 <!--
-演示步骤：选择预设例子观察离线模拟的概率和框；所有结果是演示数据，不是模型输出或实测把握度。
-Box 与图片输入需在请求中加 TypeSafe-Danger-Zone-Images: true，官方标注 Dreamer-ready，格式和准确度可能变化，适合原型。
-请求失败时说明错误并重试，不引用旧的概率数字。
--->
-
----
-
-# 一次调用长什么样
-
-<div class="eyebrow">认识 Jev · 一次调用</div>
-
-<div class="cols" style="grid-template-columns:1.7fr 1fr;align-items:center">
-<div>
-
-```ts
-const res = await fetch('https://api.typesafe.ai/v1/systemone', {
-  method: 'POST',
-  headers: { Authorization: `Bearer ${KEY}` },   // 只放服务端！
-  body: JSON.stringify({
-    model: 'jev-latest',   // 演示用；上线请写死具体版本
-    state: '我的月订阅被扣了两次款。可以帮我核对吗？',
-    questions: {
-      is_urgent:  { type: 'noul',   instructions: '是否要求马上处理？' },
-      department: { type: 'choice', instructions: '该由哪个团队处理？', criteria: {
-        billing: '付款、扣费、退款', technical: '故障、报错', other: '以上都不是' } },
-      frustration:{ type: 'score',  instructions: '客户有多不满？',
-        criteria: ['冷静', '不满但礼貌', '非常愤怒'] },
-    },
-  }),
-})
-// → answers.is_urgent.noul / answers.department.choice / .probabilities / .confidence
-```
-<div class="cap" style="font-size:15px">model＝用哪个版本　state＝要判断的材料　questions＝题目　criteria＝选项 / 等级说明　instructions＝题干　confidence＝把握度</div>
-</div>
-<div>
-<img class="shot" src="/img/firstcode.jpg" style="max-height:320px;width:auto;margin:0 auto" />
-</div>
-</div>
-
-<div class="takeaway">代码读键，别去解析散文；<b>判定之后做什么，由你的 if 决定</b>，Jev 不会替你执行业务。</div>
-
-<!--
-对前端最熟悉：就是一个 fetch，三个字段。注意 Key 只能放服务端，别进浏览器——这也是后面 Demo 用本地服务转发的原因。
+程序直接读取选项和概率，不需要从自然语言回复里提取答案；完整请求和字段规则在后面的接入章节展开。
+演示步骤：是非、单选、打分共用“买礼包扣了两次钱，道具还没到账！活动马上结束了，赶紧处理，太让人失望了！”的同一条预设工单，依次看紧急概率、billing 部门、情绪评分，材料不变只换问题。Box 保留同一网页图中的三个目标：搜索栏、7 号区块、拿清单的机器人；目标和问题使用中文描述，切换后重新运行显示预设框。结果全部为离线演示数据，不是模型输出或实测置信度。
+Box 的历史资料标注需图片输入与 TypeSafe-Danger-Zone-Images 请求头，具体格式及支持范围以当前官方文档为准。自定义输入失败是预设边界，不切换成假装真实的结果。
 -->
 
 ---
@@ -438,29 +400,23 @@ const res = await fetch('https://api.typesafe.ai/v1/systemone', {
 </div>
 </div>
 
-<div style="margin-top:18px;border-top:1px solid var(--line);padding-top:14px">
-<div style="display:flex;align-items:baseline;gap:34px">
-<div style="font-size:16px;font-weight:700;color:var(--tx2);white-space:nowrap">延迟参考</div>
-<div style="font-size:16px;color:var(--tx2)">官方单次 <b style="font-family:var(--mono);font-size:25px;color:var(--cy);margin-left:6px;white-space:nowrap">70–500 ms</b></div>
-<div style="font-size:16px;color:var(--tx2)">本机单次 <b style="font-family:var(--mono);font-size:25px;color:var(--gn);margin-left:6px;white-space:nowrap">~250 ms</b></div>
-</div>
-<div style="font-size:14px;color:var(--tx2);margin-top:9px">测量条件不同，不可直接比较；实际延迟需在自己的网络和请求条件下测试。</div>
-</div>
+<div class="takeaway">少生成文字，不等于所有任务都更快；用相同材料与质量要求，对比端到端延迟的中位数和 P95。</div>
+<div class="cap">本场离线演示不测网络延迟；外部案例中的耗时仅适用于其披露的任务和条件。</div>
 
 <!--
 为什么快？大模型像写作文，逐个生成 token；Jev 将输出限定为预先定义的结构化选项。
-官方称采用并行采样和新架构，但没有公开完整实现。官方延迟范围、社区自报汇总与本机单次实测的口径不同，不直接横向比较；上线前要用自己的请求和网络测端到端表现。
+官方实现细节不能仅从接口形式推断。少生成文字是设计差别，不足以证明端到端延迟更低；需要用相同任务与质量标准比较中位数和 P95。本场离线预设的耗时不作为模型性能证据。
 -->
 
 
 ---
 
-# 为什么省：收费方式与边界
+# 为什么省：计费方式与成本估算
 
 <div class="eyebrow">核心优势 · 费用</div>
 <div class="cols c2" style="gap:18px;margin-top:18px;align-items:stretch">
 <div class="card cy compact">
-<div class="tag">官方 API 价格</div>
+<div class="tag">已有资料中的价格记录 · 非实时报价</div>
 <div style="display:flex;align-items:baseline;gap:10px;margin:12px 0"><span class="kpi" style="font-size:48px">$0.042</span><span class="dim">/ 100 万输入 Token</span></div>
 <p>输出 Token <b>免费</b>；材料和题目都计入输入。多道题共用材料时，可以减少重复发送。</p>
 </div>
@@ -475,54 +431,79 @@ const res = await fetch('https://api.typesafe.ai/v1/systemone', {
 </div>
 </div>
 <div class="card am compact" style="margin-top:12px"><div class="tag">省钱不只看单价</div><p>实际费用还取决于<b>输入长度、调用次数、错误率和复核成本</b>。同一任务也要与规则或其他模型比较。</p></div>
-<div class="takeaway">用自己的任务和实际费用比较；价格以 <a href="https://typesafe.ai/" target="_blank">TypeSafe 官网</a>和控制台为准。</div>
+<div class="takeaway">便宜的请求不一定是便宜的方案：把调用、复核与维护成本一起算。</div>
 
 <!--
-截至 2026-10-28，TypeSafe 官网列出的 Jev 输入价格为每百万 token 0.042 美元，输出免费。示例：400 × 100 万 ÷ 100 万 × 0.042 = 16.80 美元，仅为输入费用；材料和题目均计入输入。对比时还要算准确率、复核及人工成本。来源：https://typesafe.ai/
+已有分享资料记录的披露日期为 2026-10-28：输入每百万 token 0.042 美元，输出免费。本轮未能重新获取官网正文，现场不称其为当前核验价格，打开官网与控制台确认后再用于实际预算。示例：400 × 100 万 ÷ 100 万 × 0.042 = 16.80 美元，仅为输入费用；材料和题目均计入输入。还要算复核与人工成本。来源入口：https://typesafe.ai/
 -->
 
 
 ---
+class: story-slide confidence-slide
+---
 
-# 把握度：让程序知道何时需要复核
+# 为什么可控：判断之后，还能安排复核
 
-<div class="eyebrow">核心优势 · 把握度与分流</div>
+<div class="eyebrow">程序决定处理方式 · 模型给出答案，不等于必须直接采用</div>
 
-<div class="cols c2" style="margin-top:16px;gap:18px;align-items:start">
-<div class="card cy compact"><div class="tag">先看懂结果</div><h3>一张工单，模型有多确定？</h3><p>例如，Jev 把工单分为“账单问题”，并给出 <b>90% 把握度</b>。这个数字表示模型的估计，并不保证这一次一定正确。</p><div class="node cy" style="margin-top:10px">工单内容 → 账单问题 · 把握度 90%</div></div>
-<div class="card pu compact"><div class="tag">再决定怎么处理 · 示例</div><div style="display:grid;gap:8px;margin-top:10px"><div class="node gn">高把握 → 自动分配</div><div class="node pu">中等把握 → 再检查</div><div class="node am">低把握 → 交人工</div></div><p class="dim" style="font-size:15px;margin-top:8px">分界线由业务风险和实测结果决定。</p></div>
+<div class="story-body review-story">
+<div class="review-example">
+<div><span class="review-label">还是这条礼包工单</span><p>“买礼包扣了两次钱，道具还没到账！”</p></div>
+<div class="review-suggestion"><span class="review-label">模型给出建议</span><strong>交给账单团队 <code>billing</code></strong></div>
 </div>
-<div class="card compact" style="margin-top:12px"><div class="tag">怎样判断把握度靠不靠谱？</div><p>把很多条“约 90% 把握”的结果与人工答案对照；如果其中约 90% 确实正确，就说明这一档的把握度比较可靠。这个检查叫<b>校准</b>。</p></div>
-<div class="takeaway">这是批量结果的验证，不能保证单次正确；上线前用自己的数据测试。</div>
-<!-- 校准是比较预测把握度与实际正确比例的方法。90% 是便于理解的示例，不代表这个项目的实测准确率；分流阈值需要业务数据验证。 -->
+<div class="review-question">收到这个建议，程序可以怎么处理？</div>
+<div class="cols c3 review-options">
+<div class="card gn"><div class="tag">01 · 满足已验证的自动分配条件</div><h3>直接分配</h3><p>历史测试表现达标，材料完整，也符合业务规则，就按建议分给账单团队。</p><div class="review-outcome">只分配工单，不自动退款</div></div>
+<div class="card pu"><div class="tag">02 · 尚未达到自动分配条件</div><h3>再检查一次</h3><p>交给规则或其他模型核对；仍无法确认，就转人工处理。</p><div class="review-outcome">先复核，再决定归属</div></div>
+<div class="card am"><div class="tag">03 · 材料不足，或涉及重要操作</div><h3>交给人工</h3><p>先补充订单信息；退款、封号等操作仍要单独经过权限与业务审核。</p><div class="review-outcome">不能凭模型建议直接执行</div></div>
+</div>
+<div class="review-signal"><span class="review-label">confidence 在哪里起作用？</span><p>它是接口提供的一个<b>复核参考信号</b>，不是实测正确率。先用历史工单检查“不同分数下实际错了多少”，再决定怎样设置自动分配条件。</p></div>
+<div class="takeaway">模型负责建议“交给谁”；程序结合历史验证、材料和业务规则，决定“直接分配、再检查，还是交人工”。</div>
+</div>
+
+<!--
+不要从“置信度是什么”开讲。先接前面的礼包工单：模型建议 billing，我们是否一定照做？答案是否，流程是我们写的。
+三张卡是三种可配置的处理策略示意，不是模型自动判断出来的三档，更不是当前离线 Demo 实现的完整策略。直接分配的是工单，不是执行退款。材料不足要补充信息，重要操作要独立审核。
+最后再介绍 confidence：具体含义以对应模型与当前文档为准，不能直接当成这次正确的概率，不能默认等于最高选项概率。先用独立标注数据检查各分数段的真实错分情况，再衡量自动处理覆盖量、错分与复核成本，确定是否值得使用该信号。
+这里的“可控”是我们能设计处理流程，不是承诺模型一定正确。下一页用同一条工单和离线预设演示简化版：三道题一起返回，路由建议只按部门置信度与手动阈值变化；信息完整性、紧急度、情绪及重要操作审核未接入这段路由逻辑。
+-->
 
 ---
 class: demo-slide demo-types-slide
 ---
 
-# 🔴 现场演示 2：工单分流
+# 交互演示 2：判断之后，工单怎么走？
 
-<div class="eyebrow">核心优势 · 现场演示</div>
+<div class="eyebrow">同一条工单 · 三种题型一起判断，再按部门置信度演示分流</div>
 
 <DemoTicket />
 
 <!--
-演示步骤：选择预设工单并调整阈值，比较离线模拟结果；VIP 场景使用预设客户资料。概率和把握度是模拟数据，不代表模型判断。
-请求失败时说明错误并重试。
+演示步骤：沿用题型演示的“礼包扣款”工单，三道题定义完全相同；前面逐题看，这里一次提交，同时返回紧急概率、billing 部门与情绪评分。当前分流仅按 department 的置信度和示例阈值计算，紧急程度与情绪作为同时返回的信号展示，不宣称三者已参与路由。再选“礼包异常”（礼包好像不对，价格变了，东西也找不到，帮我看看。）对比转人工建议。调整阈值观察路由变化，强调阈值是业务策略，不是模型自动授权。其他场景数据保留备用。
+概率与把握度均为离线模拟，不代表校准结果。当前只改变界面上的路由建议，不实际转工单或退款。说明后回到真实数据如何验证。
 -->
 
 ---
+class: story-slide
+---
 
-# 案例地图：四种类型，四个案例
+# 外部案例：看三种分工，不只看一个快字
 
-<div class="eyebrow">真实案例 · 总览</div>
-<div class="cols c2" style="margin-top:18px">
-<div class="card cy"><div class="tag">AGENT 决策</div><h3>每一步选哪个</h3><p>浏览器 Agent</p></div>
-<div class="card cy"><div class="tag">新闻筛选</div><h3>为品牌寻找相关话题</h3><p>梭哈.AI · 新闻匹配演示</p></div>
-<div class="card pu"><div class="tag">批量处理</div><h3>逐条分类和筛选</h3><p>海量分类</p></div>
-<div class="card pu"><div class="tag">招聘初筛</div><h3>从候选人中筛选</h3><p>Jack &amp; Jill · 候选人初步评分</p></div>
+<div class="eyebrow">案例地图 · 来源不同，证据边界也不同</div>
+
+<div class="story-body">
+<div class="cols c3 case-map">
+<div class="card cy"><img src="/img/jev-ultrafast-github.png" alt="Browser Use 项目仓库截图" /><div class="tag">01 · 开源项目作者实验</div><h3>Agent 选动作</h3><p>Jev 选择操作和目标，生成模型负责需要输入的文字。</p></div>
+<div class="card pu"><img src="/img/news-filter.svg" alt="新闻按品牌相关性筛选的流程示意，不是真实测试结果" /><div class="tag">02 · 第三方演示视频</div><h3>新闻批量筛选</h3><p>先判断哪些内容相关，再把候选交给后续处理。</p></div>
+<div class="card gn"><img src="/img/jack-jill-jev.png" alt="Jack and Jill 招聘初筛案例流程图" /><div class="tag">03 · 厂商披露案例</div><h3>招聘前置初筛</h3><p>先缩小候选范围，再由更强模型和招聘经理评估。</p></div>
 </div>
-<div class="takeaway">共同点：选项事先存在，模型只需给出判断。</div>
+<div class="takeaway">共同点：把“判断”放进流程；不同点：任务、基线和评价方式不能混为一谈。</div>
+</div>
+
+<!--
+三个案例分别解释动作选择、批量筛选和前置闸门。这里只导航，不逐个读数字。来源类型不同，不能当作同一标准下的横向评测。
+新闻配图是本项目自绘的流程示意。项目截图与厂商图沿用已有素材，具体来源见后续各页。
+-->
 
 ---
 
@@ -543,7 +524,6 @@ class: demo-slide demo-types-slide
 <img class="shot" src="/img/jev-ultrafast-github.png" style="max-height:240px;object-fit:cover;object-position:top" />
 <div class="cap">Browser Use 项目仓库截图（点击放大）</div>
 <BeforeAfter title="机票搜索：项目优化前后耗时中位数" :before="{label:'优化前', v:9.45, text:'9.45 s'}" :after="{label:'优化后', v:7.09, text:'7.09 s'}" />
-<div class="cap"><a href="https://github.com/browser-use/jev-ultrafast" target="_blank">查看项目与测量说明 ↗</a></div>
 </div>
 </div>
 
@@ -558,41 +538,22 @@ class: news-video-slide
 
 # 案例 2｜批量筛新闻：为品牌寻找相关话题
 
-<div class="eyebrow">真实演示 · 新闻匹配测试</div>
+<div class="eyebrow">第三方演示视频 · 看筛选流程，不据此推断准确率</div>
+<div class="video-focus"><b>观看重点</b><span>给定品牌与标准 → 逐条判断新闻是否相关 → 保留候选，继续处理</span></div>
 
 <div class="news-video-frame">
-<video controls preload="metadata" playsinline class="news-video"><source src="/video/jev-news-demo.mp4" type="video/mp4" /></video>
+<video controls preload="metadata" playsinline class="news-video" aria-label="梭哈 AI 新闻匹配演示视频"><source src="/video/jev-news-demo.mp4" type="video/mp4" /></video>
 </div>
 
-<!-- 视频来源：https://x.com/SUOHA_AI/status/2101000339948282090 -->
+<!--
+播放前先交代观察点：品牌需求如何变成相关性判断，筛出的候选如何进入下一步。按分享时间选取关键片段，不必从头播放到尾。
+播放后用一句话总结：批量筛选的价值在缩小后续处理范围，但漏筛、误筛和端到端成本必须另测。接着看招聘初筛：同样是前置判断，如何为后续深入评估缩小候选范围。
+视频来源：https://x.com/SUOHA_AI/status/2101000339948282090
+-->
 
 ---
 
-# 案例 3｜1k Papers：批量整理 AI 论文
-
-<div class="eyebrow">真实项目 · 论文分类实验</div>
-<div class="cols c2" style="gap:20px;align-items:start;margin-top:18px">
-<div><div class="card cy"><div class="tag">1K PAPERS · HASSAN EL MGHARI</div><p>作者在论文浏览项目中尝试用 Jev 把 <b>1,018 篇论文</b>分到 <b>24 个主题</b>，方便按主题查找。</p></div>
-<div class="card pu" style="margin-top:12px"><div class="tag">作者报告的分类实验</div><p>Jev 分类费用约 <b>$0.08</b>，每篇请求延迟中位数约 <b>256 毫秒</b>。</p><p class="dim" style="font-size:14px">论文摘要由另一个模型提前生成，费用不包含在 $0.08 中；分类效果仍需验证。</p></div>
-<p class="dim" style="font-size:14px"><a href="https://x.com/nutlope/status/2100426999546184123" target="_blank">作者的实验说明 ↗</a></p></div>
-<div><img class="shot" src="/img/1kpapers-home.png" style="max-height:290px;object-fit:cover;object-position:top"/><div class="cap">1k Papers 论文浏览网站截图（点击放大）；不代表现有线上标签均由 Jev 生成。</div><p><a href="https://1kpapers.com/" target="_blank">访问 1k Papers ↗</a></p></div></div>
-<div class="takeaway">先生成摘要，再做分类；下面用 100 条反馈演示批量判断。</div>
-<!-- 来源：作者发布的实验 https://x.com/nutlope/status/2100426999546184123；页面截图仅展示论文网站，不能证明现有线上标签使用 Jev。$0.08 仅是分类阶段，摘要费用另计。 -->
-
----
-class: demo-slide
----
-
-# 🔴 现场演示 3：100 条并行分类
-
-<div class="eyebrow">真实案例 · 现场演示</div>
-
-<DemoBatch />
-<!-- 点击批量分类；结果来自预设标签，不代表真实模型准确率、耗时或费用。 -->
-
----
-
-# 案例 4｜招聘初筛：更快筛选候选人
+# 案例 3｜招聘初筛：先筛选，再深入评估
 
 <div class="eyebrow">真实案例 · Jack &amp; Jill</div>
 <div class="cols c2" style="gap:20px;margin-top:18px;align-items:start">
@@ -607,102 +568,74 @@ class: demo-slide
 <tr><td>每千名候选人成本</td><td>$0.755</td><td>$0.092</td></tr>
 <tr><td>每个岗位的初筛耗时中位数</td><td>20.3 秒</td><td>10.3 秒</td></tr>
 <tr><td>招聘经理选中人选的保留率</td><td>93.9%</td><td>94.6%</td></tr>
-</tbody></table><p class="dim" style="font-size:14px;margin-top:10px">保留率差异未达统计显著；数据来自厂商披露的特定流程。</p><a href="https://typesafe.ai/blog/jack-jill-jev-case-study" target="_blank">查看官方案例 ↗</a></div>
+</tbody></table><p class="dim" style="font-size:14px;margin-top:10px">保留率差异未达统计显著；数据来自厂商披露的特定流程。</p></div>
 </div>
-<div class="takeaway">在这个初筛流程中，官方报告成本降低约 88%，耗时约减半。</div>
+<div class="takeaway">案例展示的是“先筛选，再深入评估”；不能用初筛阶段的结果代替整条招聘流程的评估。</div>
 <!-- 来源：https://typesafe.ai/blog/jack-jill-jev-case-study。质量结果来自对真实岗位的离线测试；保留率差异未达统计显著。成本和耗时针对初筛阶段，不代表整个招聘流程。 -->
 
 ---
-
-# 好玩的演示：看个热闹，别当真
-
-<div class="eyebrow">真实案例 · 趣味实验</div>
-<div class="cols c3" style="margin-top:20px">
-<div class="card cy"><img class="shot" src="/img/tetris.jpg" style="height:160px;width:100%;object-fit:cover"/><h3>俄罗斯方块</h3><p>每落一块，让模型选择位置和旋转方式。</p></div>
-<div class="card pu"><img class="shot" src="/img/city.jpeg" style="height:160px;width:100%;object-fit:cover"/><h3>Jevton 小镇</h3><p>模拟居民和企业的日常决策。</p></div>
-<div class="card gn"><img class="shot" src="/img/sim.jpeg" style="height:160px;width:100%;object-fit:cover"/><h3>游戏与控制</h3><p>Doom 演示使用坐标等状态输入，每秒约 10 次判断。</p></div>
-</div>
-<div class="takeaway">这些实验展示高频判断，实际业务效果仍需单独验证。</div>
-<!-- 这些是趣味实验。Doom 示例输入的是状态和坐标，不是画面；不能据此推断真实业务效果。 -->
-
+class: story-slide selection-slide
 ---
 
-# 以后能用在哪：判断标准
+# 同一条客服流程，哪些步骤值得用 Jev？
 
-<div class="eyebrow">以后用在哪 · 判断标准</div>
+<div class="eyebrow">从具体任务选方案 · 不是所有步骤都需要模型，也不是所有模型都要生成文字</div>
 
-<div class="takeaway takeaway-intro">现在用大模型、但<b>其实只让它返回一个选项</b>的地方；<br/>或者"以前不值得上 AI"的小判断。</div>
-
-<div class="cols c4">
-<div class="card cy"><div class="tag">高频</div><h3>每秒多次</h3><p>UI、游戏、实时控制</p></div>
-<div class="card cy"><div class="tag">大批量</div><h3>百万条</h3><p>逐条判，输出免费</p></div>
-<div class="card cy"><div class="tag">要快</div><h3>用户在等</h3><p>几百毫秒内给结果</p></div>
-<div class="card cy"><div class="tag">要闸门</div><h3>按把握分流</h3><p>自动 / 复核 / 人工</p></div>
+<div class="story-body">
+<div class="selection-table" tabindex="0" role="region" aria-label="客服流程中的任务与方案对照">
+<table class="t">
+<colgroup><col style="width:31%"/><col style="width:27%"/><col style="width:42%"/></colgroup>
+<thead><tr><th scope="col">客服流程中的具体任务</th><th scope="col">优先比较什么方案？</th><th scope="col">为什么这样选？</th></tr></thead>
+<tbody>
+<tr><td><b>查订单是否支付、是否重复扣款</b></td><td>数据库查询 + 业务代码</td><td>有明确事实可查，不让模型猜订单状态或计算退款金额。</td></tr>
+<tr><td><b>读玩家描述，判断归哪个团队</b></td><td><span class="selection-highlight">Jev / 结构化输出模型</span></td><td>需要理解语义，但结果只需从账单、技术、销售等选项中选择。</td></tr>
+<tr><td><b>给大量历史反馈打固定标签</b></td><td>分类模型 / Jev / 其他模型</td><td>用同一批标注数据比较质量、批处理成本和维护成本，不预先认定谁最好。</td></tr>
+<tr><td><b>解释处理结果，写一段客服回复</b></td><td>回复模板 / 通用大模型</td><td>需要生成文字；涉及订单或退款承诺时，仍由业务规则约束。</td></tr>
+</tbody>
+</table>
 </div>
-
-<div class="card rd" style="margin-top:18px">
-<div class="tag">不适合</div>
-<p>写作、开放问答、看图、要解释理由的场景 · 规则已经能稳定解决的（<b>别为了用模型而用模型</b>）</p>
+<div class="selection-check"><b>哪些任务值得先测？</b><span>输出选项明确，而且调用量大、用户在等，或需要先筛一遍再复核。</span></div>
+<div class="takeaway">先用代码查事实，再让模型判断诉求，最后按需生成回复；Jev 可以参与其中一个环节，不必替换整条流程。</div>
 </div>
 
 <!--
-这页给一个自检标准。记不住别的，记住这句：现在用大模型，但其实只让它返回一个选项。
+把原来的选型、适用标准和趋势三页合并成一条具体客服流程。订单和资金数据查数据库；部门分类可比较 Jev 与其他结构化模型；标签多且稳定、有标注数据时也比较专用分类；生成回复用模板或生成模型。
+高频、大批量、延迟要求和前置筛选是值得测量的动机，不是 Jev 已证明更优的证据。结构化输出也不是 Jev 独有，选择仍看同数据下的质量、端到端延迟、复核与维护成本。
+不再单独讲军师、传令兵、智能 if 等抽象比喻，也不在这一段扩展名称由来。下一页保留完整八个应用方向，让听众从具体功能中找自己的任务；然后进入如何调用与写题。
 -->
 
 ---
+class: story-slide
+---
 
-# 前端 / 产品视角的 8 个方向
+# Jev 可以用在哪：8 个应用方向
 
-<div class="eyebrow">以后用在哪 · 8 个方向（头脑风暴）</div>
+<div class="eyebrow">以后用在哪 · 从具体功能出发，一起找应用场景</div>
 
-<div class="cols c2">
+<div class="story-body">
+<div class="cols c2 story-cards">
 <div class="card gn">
-<div class="tag">已有人跑通</div>
-<p><b>① 评论 / 用户发布内容 / 表单实时初审</b>（输入即判）<br/>
-<b>② 客服与工单入口分流</b>：情绪、紧急度、部门<br/>
-<b>③ 自动化测试 / 浏览器 Agent</b>里"点哪个"<br/>
-<b>④ AI 功能的路由器</b>：简单问题走小模型，Agent 工具调用护栏</p>
+<div class="tag">审核、分流与自动化</div>
+<h3>① 内容初审</h3><p>评论、聊天、表单提交前，判断是否需要提醒或人工复核。</p>
+<h3>② 客服工单分流</h3><p>识别诉求、紧急程度和处理部门，把工单交给对应团队。</p>
+<h3>③ 浏览器 Agent</h3><p>从页面可操作元素中选择下一步：点哪个按钮、执行什么动作。</p>
+<h3>④ AI 功能路由</h3><p>判断问题类型，选择规则、小模型、大模型或人工处理。</p>
 </div>
 <div class="card pu">
-<div class="tag">我们的设想（待验证）</div>
-<p><b>⑤ 搜索 / 筛选</b>：自然语言 → 筛选项或意图分类<br/>
-<b>⑥ 埋点 / 日志 / 报错</b>自动分级，告警降噪<br/>
-<b>⑦ 自适应 UI</b>：预测用户下一步，个性化入口<br/>
-<b>⑧ 研发效率</b>：代码改动风险分级、Bug / 需求自动打标签</p>
+<div class="tag">产品与研发中的设想 · 待验证</div>
+<h3>⑤ 搜索 / 筛选</h3><p>把“找最近充值失败的订单”识别为对应的筛选意图。</p>
+<h3>⑥ 日志 / 报错分级</h3><p>区分普通异常、需关注问题和紧急故障，辅助告警降噪。</p>
+<h3>⑦ 自适应 UI</h3><p>识别用户想建日程、记账还是记笔记，展示对应的卡片。</p>
+<h3>⑧ 研发标签</h3><p>给 Bug、需求和代码改动打标签，辅助分派与风险复核。</p>
 </div>
 </div>
-
-<div class="takeaway"><b>游戏平台里的例子：</b>玩家评论 / 聊天实时审核 · 客服工单（充值、封号、BUG）分流 · 玩家反馈自动打标签<span class="dim">　讨论：我们有哪些调用"只返回一个选项"？</span></div>
+<div class="takeaway"><b>游戏平台里的例子：</b>玩家评论 / 聊天初审 · 充值、封号、BUG 工单分流 · 玩家反馈打标签。</div>
+</div>
 
 <!--
-这页留给互动。前四个已经有别人真的做出来了；后四个是我们结合前端业务的设想，需要先盲测。
-问大家：你们负责的系统里，有哪些地方符合？
--->
-
----
-
-# 趋势：AI 调用在分层
-
-<div class="eyebrow">以后用在哪 · 趋势</div>
-
-<div class="cols c2" style="align-items:center">
-<div style="display:grid;gap:14px">
-<div class="card cy"><div class="tag">军师</div><h3>大模型</h3><p>拆解复杂任务、写代码、写文案</p></div>
-<div class="card pu"><div class="tag">传令兵</div><h3>Jev 这类判断模型</h3><p>成百上千次的工具分拣、条件路由、合规拦截</p></div>
-</div>
-<div>
-
-- **杰文斯悖论**：东西变便宜以后，用量往往<b>不降反升</b>——Jev 的名字就来自它
-- 产品与接口更新很快：题目和代码尽量解耦，**选型时用自己的数据比较**
-- 更本质的启发：程序之间交互，真的每一步都需要长篇自然语言吗？
-
-</div>
-</div>
-
-<div class="takeaway">给系统装上一枚枚毫秒级响应的<b>智能 if</b>。</div>
-
-<!--
-趋势一句话：AI 调用在分层。这也是为什么即使 Jev 本身以后被替代，这套"选择题 + 概率 + 分流"的思路依然有效。
+这页的目的仍是展开应用方向，不在这里讲试点实施方法。按两组介绍八种具体功能，每个方向说明“输入什么、判断什么、结果用在哪里”，不要只读抽象名词。
+浏览器 Agent 呼应前面的开源案例，自适应 UI 为后面的变形输入框埋伏笔。其余是候选方向，不表示本项目已验证可上线。
+最后联系游戏平台：评论初审、充值或封号工单的首接部门、玩家反馈标签。工单分类不等于执行退款或封号；试点、质量验证和重要操作审核留在后面的落地章节。
 -->
 
 ---
@@ -732,81 +665,175 @@ class: demo-slide
 -->
 
 ---
+class: story-slide api-call-slide
+---
 
-# 写题规则 ①：哪些是固定的，哪些自己起名
+# 一次调用长什么样
 
-<div class="eyebrow">上手 · 写题规则（最外层固定为 model / state / questions）</div>
+<div class="eyebrow">上手 ① · 服务端发送请求 → 检查响应 → 按字段读取结果</div>
 
-<div class="cols" style="grid-template-columns:1fr 1.25fr;gap:18px;align-items:start">
-<div>
-<pre class="jv"><span class="p">{</span>
-  <span class="nm">"request_type"</span>: <span class="p">{</span>
-    <span class="fx">"type"</span>: <span class="tv">"choice"</span>,
-    <span class="fx">"instructions"</span>: <span class="tx">"根据 message，判断用户的主要诉求。"</span>,
-    <span class="fx">"criteria"</span>: <span class="p">{</span>
-      <span class="nm">"refund"</span>: <span class="tx">"要求退款"</span>,
-      <span class="nm">"repair"</span>: <span class="tx">"要求维修"</span>,
-      <span class="nm">"other"</span>: <span class="tx">"其他诉求"</span>
-    <span class="p">}</span>
-  <span class="p">}</span>,
-  <span class="nm">"wants_refund"</span>: <span class="p">{</span>
-    <span class="fx">"type"</span>: <span class="tv">"noul"</span>,
-    <span class="fx">"instructions"</span>: <span class="tx">"message 中的用户是否明确要求退款？"</span>
-  <span class="p">}</span>
-<span class="p">}</span></pre>
-<div class="legend"><span class="fx">■ 固定字段名</span>　<span class="tv">■ 规定的类型值</span>　<span class="nm">■ 自己起名</span>　<span class="tx">■ 自己填写的内容</span></div>
+<div class="story-body">
+<div class="cols c21 api-example api-call">
+<div class="card cy">
+<div class="tag">请求示例</div>
+
+```ts
+const response = await fetch('https://api.typesafe.ai/v1/systemone', {
+  method: 'POST',
+  headers: {
+    Authorization: `Bearer ${process.env.TYPESAFE_API_KEY}`,
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    model: 'jev-latest',
+    state: '充值扣款了，但道具一直没到账。',
+    questions: {
+      department: {
+        type: 'choice',
+        instructions: '这条工单的首接团队是谁？',
+        criteria: {
+          billing: '支付、扣款、到账、退款问题',
+          technical: '与支付无关的登录或功能故障',
+          other: '其他或信息不足',
+        },
+      },
+    },
+  }),
+})
+```
+
 </div>
-<div class="compact">
-<table class="t"><tbody>
-<tr><th>内容</th><th>是否固定</th><th>说明</th></tr>
-<tr><td><code>request_type</code>、<code>wants_refund</code></td><td class="nm">自己命名</td><td>题目的名字，可改成 <code>category</code> 等；结果用<b>同名字段</b>返回</td></tr>
-<tr><td><code>type</code></td><td class="fx">固定字段名</td><td>告诉 Jev 用哪种方式回答</td></tr>
-<tr><td><code>"choice"</code>、<code>"noul"</code></td><td class="tv">规定的类型值</td><td>只能从 <code>choice</code> / <code>noul</code> / <code>score</code> / <code>box</code> 里选，<b>不能随意编</b></td></tr>
-<tr><td><code>instructions</code></td><td class="fx">固定字段名</td><td>后面的<b>问题内容由你填写</b></td></tr>
-<tr><td><code>criteria</code></td><td class="fx">固定字段名</td><td>定义选项或评分标准，具体格式取决于 <code>type</code></td></tr>
-<tr><td><code>refund</code>、<code>repair</code>、<code>other</code></td><td class="nm">自己命名</td><td>选项标识，选中后<b>返回这个名字</b></td></tr>
-<tr><td><code>"要求退款"</code> 等</td><td class="tx">自己填写</td><td>解释每个选项代表什么</td></tr>
-</tbody></table>
-</div>
-</div>
+<div class="api-response card pu"><div class="tag">响应示例</div>
 
-<div class="takeaway">一句话：<b>固定的是"形状"（字段名和类型），自己写的是"内容"（题目、选项、说明）。</b></div>
+```json
+{
+  "answers": {
+    "department": {
+      "type": "choice",
+      "choice": "billing",
+      "confidence": 0.9,
+      "probabilities": {
+        "billing": 0.9,
+        "technical": 0.06,
+        "other": 0.04
+      }
+    }
+  }
+}
+```
+
+<div class="api-reading">
+<div class="api-reading-title">读取判断结果</div>
+<div><code>choice</code><span>选中的选项</span></div>
+<div><code>probabilities</code><span>各选项的概率</span></div>
+<div><code>confidence</code><span>把握度，辅助决定是否复核</span></div>
+</div>
+</div>
+</div>
+<div class="takeaway">请求定义问题，响应返回判断；后续处理由业务代码决定。</div>
+</div>
 
 <!--
-这页回答最常见的问题："这些字段都是固定的吗？"
-把它想成填表：表头是印好的（type、instructions、criteria），你填的是内容和自己起的名字。
-颜色：青色=固定字段名，紫色=规定的类型值，橙色=自己起名，绿色=自己填的内容。
+这页展示请求与响应的对应关系。先看 URL、POST、鉴权和 Content-Type，再看展开后的 model、state、questions、题型与选项，最后结合右侧说明读取结果。响应解析与错误处理代码不在本页展开，实际接入仍需补齐。
+强调这是服务端示例，不能将 Key 直接放进浏览器。右边按项目留存的历史响应结构节选，省略 model、usage 等字段；选项与数值为手写示例，不是左侧输入的真实调用结果，也未重新核验当前线上 API。confidence 与最大选项概率不应默认相等。网页交互演示仍是离线模拟。示例只保留一道 choice 题保证可读性，同一份材料可添加多道题。实际接入需按当前文档校验结构，不能把这个简化示例直接当完整生产封装。
+过渡：代码里这么多名字，哪些是接口规定的，哪些是我们自己起的？下一页分颜色解释。
 -->
 
 ---
+class: story-slide
+---
 
-# 写题规则 ②：type 只能四选一
+# 写题规则 ①：哪些固定，哪些自己定义？
 
-<div class="eyebrow">上手 · 写题规则（规定回答形式，内容由你写）</div>
+<div class="eyebrow">上手 ② · 字段名、规定类型、自己命名、自己填写，分开看</div>
 
-<div class="compact">
-<table class="t"><tbody>
-<tr><th>type</th><th>回答形式</th><th>criteria 怎么写</th><th>返回什么</th></tr>
-<tr><td><code>noul</code></td><td>是非题</td><td>通常不需要</td><td><code>noul</code>：0–1 的"是"的概率</td></tr>
-<tr><td><code>choice</code></td><td>单选题</td><td><b>对象</b>：选项名 → 说明，最多 255 个</td><td><code>choice</code>（选中的名字）、<code>probabilities</code>（各项概率）、<code>confidence</code></td></tr>
-<tr><td><code>score</code></td><td>打分题</td><td><b>数组</b>：从低到高的等级说明</td><td><code>score</code>（可为小数）、<code>probabilities</code>、<code>confidence</code></td></tr>
-<tr><td><code>box</code></td><td>框选（需图片）</td><td>不需要，只写 <code>instructions</code></td><td><code>box</code>（top / bottom / left / right，0–1 比例）、<code>confidence</code>；需图片和 <code>TypeSafe-Danger-Zone-Images</code> 请求头</td></tr>
-</tbody></table>
+<div class="story-body">
+<div class="cols c2 api-example field-guide">
+<div class="card cy">
+<div class="tag">沿用刚才的工单 · 颜色区分四种内容</div>
+<pre class="jv">{
+  <span class="fx">"model"</span>: <span class="tx">"jev-latest"</span>,
+  <span class="fx">"state"</span>: <span class="tx">"充值扣款了，但道具一直没到账。"</span>,
+  <span class="fx">"questions"</span>: {
+    <span class="nm">"department"</span>: {
+      <span class="fx">"type"</span>: <span class="tv">"choice"</span>,
+      <span class="fx">"instructions"</span>: <span class="tx">"这条工单的首接团队是谁？"</span>,
+      <span class="fx">"criteria"</span>: {
+        <span class="nm">"billing"</span>: <span class="tx">"支付、扣款、到账、退款问题"</span>,
+        <span class="nm">"technical"</span>: <span class="tx">"与支付无关的登录或功能故障"</span>,
+        <span class="nm">"other"</span>: <span class="tx">"其他或信息不足"</span>
+      }
+    }
+  }
+}</pre>
+<div class="legend"><span class="fx">■ 固定字段</span>　<span class="tv">■ 规定类型</span><br/><span class="nm">■ 自己命名</span>　<span class="tx">■ 自己填写</span></div>
 </div>
-
-<div class="cols c4 compact" style="margin-top:12px;gap:12px">
-<div class="card cy"><div class="tag">规矩 1</div><p>选项要<b>互斥</b>：别同时写"售后"和"退货"，除非你能一句话说清差别</p></div>
-<div class="card cy"><div class="tag">规矩 2</div><p>单选题留一个 <code>other</code>：不然它会<b>硬选</b>一个最像的</p></div>
-<div class="card cy"><div class="tag">规矩 3</div><p>名字用<b>英文 + 下划线</b>：代码里要用它读结果</p></div>
-<div class="card cy"><div class="tag">规矩 4</div><p><b>一题只问一件事</b>；同一份材料的多道题，合并成一次请求</p></div>
+<div class="api-notes">
+<div class="card"><div class="tag fx">青色 · 接口规定的字段名</div><p><code>model</code>、<code>state</code>、<code>questions</code>、<code>type</code>、<code>instructions</code>、<code>criteria</code> 不能随意改名；是否需要 <code>criteria</code> 取决于题型。</p></div>
+<div class="card pu"><div class="tag">紫色 · 规定的类型值</div><p><code>type</code> 按支持的题型填写：<code>noul</code>、<code>choice</code>、<code>score</code>、实验性 <code>box</code>，不能自创类型。</p></div>
+<div class="card"><div class="tag nm">橙色 · 题名和选项标识自己起</div><p><code>department</code> 可改成 <code>category</code>；<code>billing</code> 等标识也可自定。改题名后，读取路径同步改为 <code>answers.category</code>。</p></div>
+<div class="card gn"><div class="tag">绿色 · 内容自己填，模型选受支持版本</div><p>材料、题干和选项说明由你填写；<code>model</code> 的值须是服务支持的模型名，不是随意起名。</p></div>
 </div>
-
-<div class="takeaway">报错先查：<code>type</code> 拼写；单选的 <code>criteria</code> 用<b>对象</b>、打分的用<b>数组</b>。</div>
+</div>
+<div class="takeaway">固定的是字段名与类型约定；自定义的是题名、选项标识和判断内容。<code>other</code> 也是自定义选项，不是保留字段。</div>
+</div>
 
 <!--
-type 的值目前只能从四种里选：choice、noul、score、box。它规定的是"回答形式"；问题内容你自己写，选 choice 时有哪些选项也由你定义。
-box 用来在图里找位置，返回四条边（占图片宽高的 0–1 比例）和 confidence；需要带图，并加 TypeSafe-Danger-Zone-Images 请求头。官方标注 Dreamer-ready，先当原型玩，第 10 页已现场演示。
-常见报错：type 拼错；choice 的 criteria 要写成对象，score 的要写成数组。
+四种颜色配合文字标签，避免只靠颜色区分。model 是固定字段名，但值是从服务支持的模型中选择；不是整个字符串都写死，也不是任意编模型名。state 的内容由业务提供。
+department 是我们起的题名，不是官方固定业务字段；billing、technical、other 都是 choice 选项标识。把 department 改成 category 后，返回同名题目，代码读取 answers.category.choice。criteria 这个字段名固定，但内部写对象还是数组取决于题型，下一页具体对照。
+-->
+
+---
+class: story-slide type-rules-slide
+---
+
+# 写题规则 ②：题型决定 criteria 和返回值
+
+<div class="eyebrow">上手 ③ · 题型不是随便起名；choice 用对象，score 用有序数组</div>
+
+<div class="story-body">
+<div class="type-rule-table" tabindex="0" role="region" aria-label="四种题型的填写规则与返回字段对照表">
+<table class="t">
+<colgroup><col style="width:13%"/><col style="width:19%"/><col style="width:31%"/><col style="width:37%"/></colgroup>
+<thead><tr><th scope="col">type / 用途</th><th scope="col">criteria 格式</th><th scope="col">填写示例</th><th scope="col">返回字段 / 注意事项</th></tr></thead>
+<tbody>
+<tr><th scope="row"><code>noul</code><span class="rule-description">是非判断</span></th><td><b>不需要</b><span class="rule-description">在 instructions 中写判断条件</span></td><td><code>instructions:</code><br/><code>'是否要求马上处理？'</code></td><td><code>noul</code>：0～1 的“是”的概率。<span class="rule-description">返回的是概率，不是 true / false。</span></td></tr>
+<tr><th scope="row"><code>choice</code><span class="rule-description">从选项中选一个</span></th><td><b>对象 { }</b><span class="rule-description">选项标识 → 选项说明</span></td><td><code>criteria: {</code><br/><code>  billing: '账单问题',</code><br/><code>  other: '其他' }</code></td><td><code>choice</code>：选中的自定义标识。<br/><code>probabilities</code>：各项概率。<br/><code>confidence</code>：把握度。<span class="rule-description">不要把选项对象写成数组。</span></td></tr>
+<tr><th scope="row"><code>score</code><span class="rule-description">按等级打分</span></th><td><b>有序数组 [ ]</b><span class="rule-description">等级说明从低到高排列</span></td><td><code>criteria: [</code><br/><code>  '冷静', '不满但礼貌',</code><br/><code>  '非常愤怒' ]</code></td><td><code>score</code>：评分，可为小数。<br/><code>probabilities</code>、<code>confidence</code>。<span class="rule-description">示例的三个等级对应 0、1、2；不是选项对象。</span></td></tr>
+<tr><th scope="row"><code>box</code><span class="rule-description">图像定位 · 实验</span></th><td><b>不需要</b><span class="rule-description">另需图片资产与目标描述</span></td><td><code>instructions:</code><br/><code>'图片中搜索栏的位置'</code><span class="rule-description">需同时提供图片，不能只传文字。</span></td><td><code>box</code>：top / bottom / left / right，0～1 比例；<code>confidence</code>：把握度。<span class="rule-description">图片格式与实验请求头要求以当前文档为准。</span></td></tr>
+</tbody>
+</table>
+</div>
+<div class="takeaway">同一材料可同时提多题：<code>department</code> 用 choice，<code>is_urgent</code> 用 noul，<code>frustration</code> 用 score。</div>
+</div>
+
+<!--
+逐行讲清 criteria：noul 不需要，choice 是选项对象，score 是由低到高的说明数组，box 需要图片资产并遵循实验接口要求。这里只恢复原有题型教学，不新增未经核验的数量上限或新能力承诺。
+返回字段也有规定：同一自定义题名下，noul 读 noul，choice 读 choice，score 读 score，box 读 box。noul 是概率而不是布尔值，score 可以为小数。参数和实验支持范围以当前官方文档为准。
+下一页才讨论怎么把分类边界写清楚：会填接口是第一步，题目明确是第二步，二者不能互相替代。
+-->
+
+---
+class: story-slide
+---
+
+# 写题不是填字段：把模糊边界写清楚
+
+<div class="eyebrow">上手 · 同一个工单，坏题目与改进后的题目</div>
+
+<div class="story-body">
+<div class="question-sample">客户原话：<b>“充值扣款了，但道具一直没到账。”</b></div>
+<div class="cols c2 story-cards">
+<div class="card rd"><div class="tag">容易出错的问法</div><h3>“属于充值、BUG 还是售后？”</h3><p>充值和售后可能重叠，“BUG”的范围不明确；材料再少，也必须硬选一个。</p><div class="answer-pill">问题不在 JSON，而在分类标准</div></div>
+<div class="card gn"><div class="tag">更清楚的问法</div><h3>“这条工单的首接团队是谁？”</h3><p><b>账单：</b>支付、扣款、到账、退款问题。<br/><b>技术：</b>与支付无关的登录或功能故障。<br/><b>其他：</b>不属于以上两类或材料不足。</p></div>
+</div>
+<div class="idea-strip"><b>写题检查</b><span>一题一件事 · 说明重叠时的优先级 · 留其他出口 · 用反例测试</span></div>
+<div class="takeaway">示例规则中，“未到账”先归账单团队；这是业务约定，不是模型自己决定的真理。</div>
+</div>
+
+<!--
+先问听众会选哪一类，再指出三个标签本身重叠，换模型也不一定解决。右边将问题限定为首接团队，并把未到账的归属写清楚。
+other 只是出口，不保证模型一定知道自己不知道；还要检查信息是否足够。修改标准后，用独立样本和反例重新验证，不把现场预设当作效果证据。
 -->
 
 ---
@@ -826,8 +853,31 @@ box 用来在图里找位置，返回四条边（占图片宽高的 0–1 比例
 <!-- 日期和计算由代码处理；只提供判断所需材料。用真实数据验证正确率和稳定性，重要操作保留业务规则。 -->
 
 ---
+class: story-slide
+---
 
-# 如何开始试用 Jev
+# 怎样验证：不只看一个“准确率”
+
+<div class="eyebrow">上手与落地 · 工单试点的最小评估闭环</div>
+
+<div class="story-body">
+<div class="figure-scroll"><img class="story-figure" src="/img/validation-loop.svg" alt="脱敏历史工单经过标注、独立测试集、方案比较和影子运行，再决定是否小流量上线" /></div>
+<div class="cols c3 story-cards">
+<div class="card cy"><div class="tag">质量 · 错在什么地方？</div><h3>按类别看误分与漏分</h3><p>重点看紧急工单漏判、少数类别与材料不足；不只报总体平均数。</p></div>
+<div class="card pu"><div class="tag">自动化 · 能放心放行多少？</div><h3>同时看覆盖率与错误率</h3><p>提高把握度门槛后，自动处理剩多少？被放行的工单还有多少错分？</p></div>
+<div class="card gn"><div class="tag">成本 · 整条链划不划算？</div><h3>比较延迟、复核与维护</h3><p>记录中位数 / P95、调用费用、人工复核量；与现有规则和其他模型比较。</p></div>
+</div>
+<div class="takeaway">调题目用一批数据，验收留一批独立数据；先定可接受的错分代价，再决定是否自动化。</div>
+</div>
+
+<!--
+分开调试集与独立测试集，避免反复看答案后高估效果；先脱敏并确认数据可用于外部服务。比较方案时用相同输入和评价标准。
+覆盖率指有多少请求被自动处理，错误率要单独看这部分。阈值不是越高越好，还影响人工复核量。影子运行不改变现有路由；达到预定标准后才考虑小流量，并保留回退。
+-->
+
+---
+
+# 从一个工单试点开始，不急着替换系统
 
 <div class="eyebrow">上手与落地 · 以工单分流为例</div>
 
@@ -843,6 +893,51 @@ box 用来在图里找位置，返回四条边（占图片宽高的 0–1 比例
 
 <!--
 以工单分流为例：选任务、用历史工单对照、与旧流程并行观察。样本量和观察时间要根据业务风险决定，不能只凭固定天数判断是否上线。右边是并行观察和上线检查的示意图。
+-->
+
+---
+class: story-slide
+---
+
+# 带走三句话：模型判断，代码计算，用户确认
+
+<div class="eyebrow">先收束核心观点 · 最后用一个交互演示串起来</div>
+
+<div class="story-body">
+<div class="cols c3 summary-cards">
+<div class="card cy"><span class="summary-number">01</span><h3>判断不必变成长篇回答</h3><p>输出选项、分数与概率，让程序直接读取；但格式正确不代表判断正确。</p></div>
+<div class="card pu"><span class="summary-number">02</span><h3>确定的事交给代码</h3><p>日期、金额、单位换算由代码计算；业务权限、校验和执行也不能省。</p></div>
+<div class="card gn"><span class="summary-number">03</span><h3>不确定时保留回退</h3><p>低把握复核，重要操作确认；阈值与自动化范围由真实数据决定。</p></div>
+</div>
+<div class="takeaway">值得带走的不只是 Jev，而是“结构化判断 + 确定性代码 + 可控流程”的设计方法。</div>
+</div>
+
+<!--
+先用工单回顾分工：部门建议是判断，查订单与校验权限是代码，影响大的动作需要确认与回退。
+接下来用变形输入框串起这三个原则：意图分类、日期与金额计算、用户确认。介绍后直接演示，演示结束进入致谢。
+-->
+
+---
+class: story-slide
+---
+
+# 最后，把判断结果变成看得见的交互
+
+<div class="eyebrow">交互演示 3 · 会变形的输入框</div>
+
+<div class="story-body">
+<div class="figure-scroll"><img class="story-figure" src="/img/intent-to-card.svg" alt="用户输入自然语言，判断意图后由本地代码解析日期和数值，生成可预览并由用户确认的卡片" /></div>
+<div class="cols c3 story-cards">
+<div class="card cy"><div class="tag">第一步 · 输入逐渐完整</div><h3>观察界面如何过渡</h3><p>“明天” → “明天中午” → “明天中午和小王” → 完整日程。</p></div>
+<div class="card pu"><div class="tag">第二步 · 只选几个例子</div><h3>日程、AA、换算、笔记</h3><p>关注同一输入框如何服务不同意图，不逐个遍历全部卡片。</p></div>
+<div class="card gn"><div class="tag">第三步 · 保留控制权</div><h3>预览、手选，再确认</h3><p>按 / 选类型，Tab 确认预览，Enter 保存；自定义文本可手动选择类型。</p></div>
+</div>
+<div class="takeaway">下一页为离线预设：展示交互设计，不证明任意输入都能被模型正确理解。</div>
+</div>
+
+<!--
+压轴只讲一个新价值：判断不只是后台分类，也能改变前端交互。前三个例子用预设，笔记可以示范手动选类型；自定义内容不会自动判断。
+说明源自 shapeshift 的交互思路：模型判断意图，代码解析具体数值，用户拥有确认权。呼应前一页的三点总结，下一页直接演示，结束后进入致谢。
 -->
 
 ---

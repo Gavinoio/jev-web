@@ -1,4 +1,4 @@
-import { batchQuestions, batchSamples, moderateExamples, moderateQuestions, scenarios } from './scenarios.ts'
+import { batchQuestions, batchSamples, moderateExamples, moderateQuestions, scenarios, demoTicketExamples } from './scenarios.ts'
 import { boxImages, typeTabs } from './typeDemos.ts'
 import { shiftExamples, shiftQuestions } from './shift.ts'
 
@@ -27,7 +27,7 @@ const fixtures: { state: string; questions: Record<string, any>; values: Record<
 for (const tab of typeTabs) for (const example of tab.examples) if (example.expected) fixtures.push({ state: example.state, questions: tab.questions, values: example.expected as Record<string, boolean | string | number> })
 for (const scenario of scenarios) for (const example of scenario.examples) {
   let values = example.expected as Record<string, boolean | string | number> | undefined
-  if (scenario.id === 'ticket' && example.label === '涨价了？') values = { is_urgent: false, department: 'sales', frustration: 1 }
+  if (scenario.id === 'ticket' && example.label === demoTicketExamples.ambiguous.label) values = { is_urgent: false, department: 'sales', frustration: 1 }
   if (scenario.id === 'ticket' && example.label === '帮我看看这个') values = { is_urgent: false, department: 'technical', frustration: 0 }
   if (scenario.id === 'refund' && example.label === '含糊') values = { request_type: 'other', wants_refund: false }
   if (scenario.id === 'vip' && values) values = { churn_risk: example.label.includes('很生气') ? 2 : 0, ...values }
