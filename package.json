@@ -1,0 +1,20 @@
+{
+  "name": "jev-talk",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "slidev slides.md --open",
+    "build": "slidev build slides.md --out dist",
+    "export": "slidev export slides.md --output jev-talk.pdf",
+    "test": "node --experimental-strip-types --test tests/shift.test.ts tests/jev-api.test.ts"
+  },
+  "devDependencies": {
+    "@slidev/cli": "^53.0.0",
+    "@slidev/theme-default": "^0.25.0",
+    "playwright-chromium": "^1.64.1",
+    "vue": "^3.5.44"
+  },
+  "dependencies": {
+    "@lucide/vue": "^1.63.0"
+  }
+}
