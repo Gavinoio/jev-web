@@ -1,45 +1,92 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import type { AddressInfo } from 'node:net'
-import { createServer } from 'vite'
-import { jevApi } from '../vite.config.ts'
-import { callJev } from '../utils/jev.ts'
+import { callBox, callJev } from '../utils/jev.ts'
+import { batchQuestions, batchSamples, moderateExamples, moderateQuestions, scenarios } from '../utils/scenarios.ts'
+import { boxImages, typeTabs } from '../utils/typeDemos.ts'
+import { shiftExamples, shiftQuestions, initialMemory, decide, force, promote } from '../utils/shift.ts'
 
-test('Jev endpoints return an error without a server key instead of a fabricated result', async () => {
-  const server = await createServer({ configFile: false, plugins: [jevApi({})], server: { host: '127.0.0.1', port: 0 } })
+test('all presets return deterministic mock answers in the expected shape without network', async () => {
+  const originalFetch = globalThis.fetch
+  globalThis.fetch = async () => { throw new Error('unexpected network request') }
   try {
-    await server.listen()
-    const port = (server.httpServer!.address() as AddressInfo).port
-    for (const [path, body] of [
-      ['/api/jev', { state: '测试', questions: {}, replay: true }],
-      ['/api/jev-box', { image: 'agent.jpg', target: 'search bar', replay: true }],
-    ] as const) {
-      const response = await fetch(`http://127.0.0.1:${port}${path}`, { method: 'POST', body: JSON.stringify(body) })
-      const data = await response.json()
-      assert.equal(response.status, 503, path)
-      assert.equal(data.ok, false, path)
-      assert.match(data.error, /TYPESAFE_API_KEY/)
-      assert.equal(data.data, undefined, path)
+    const cases = [
+      ...typeTabs.flatMap((tab) => tab.examples.map((example) => [example.state, tab.questions] as const)),
+      ...scenarios.flatMap((scenario) => scenario.examples.map((example) => [example.state, scenario.questions] as const)),
+      ...moderateExamples.map((example) => [example.state, moderateQuestions] as const),
+      ...batchSamples(100).map((sample) => [sample.text, batchQuestions] as const),
+      ...shiftExamples.map((state) => [state, shiftQuestions] as const),
+    ]
+    for (const [state, questions] of cases) {
+      const result = await callJev(state, questions)
+      assert.equal(result.ok, true, state)
+      assert.equal(result.mode, 'mock')
+      assert.deepEqual(result, await callJev(state, questions))
+      for (const [key, question] of Object.entries<any>(questions)) {
+        const answer = result.data.answers[key]
+        assert.equal(answer.type, question.type, key)
+        if (question.type === 'noul') assert.ok(answer.noul >= 0 && answer.noul <= 1, key)
+        if (question.type === 'choice') {
+          assert.ok(Object.hasOwn(question.criteria, answer.choice), key)
+          assert.deepEqual(Object.keys(answer.probabilities), Object.keys(question.criteria))
+          assert.ok(Math.abs(Object.values<number>(answer.probabilities).reduce((sum, value) => sum + value, 0) - 1) < 1e-9)
+        }
+        if (question.type === 'score') {
+          assert.ok(Number.isFinite(answer.score), key)
+          assert.ok(answer.score >= 0 && answer.score < question.criteria.length, key)
+          assert.equal(Object.keys(answer.legend).length, question.criteria.length)
+          assert.ok(Math.abs(Object.values<number>(answer.probabilities).reduce((sum, probability) => sum + probability, 0) - 1) < 1e-9, key)
+          assert.equal(answer.probabilities[Math.round(answer.score)], answer.confidence, key)
+        }
+      }
     }
-  } finally {
-    await server.close()
-  }
+    for (const sample of batchSamples(100)) assert.equal((await callJev(sample.text, batchQuestions)).data.answers.category.choice, sample.expected)
+    for (const target of boxImages[0].targets) {
+      const result = await callBox('agent.jpg', target.target)
+      assert.equal(result.mode, 'mock')
+      assert.deepEqual(result, await callBox('agent.jpg', target.target))
+      const box = result.data.answers.target.box
+      assert.ok(box.left >= 0 && box.left < box.right && box.right <= 1 && box.top >= 0 && box.top < box.bottom && box.bottom <= 1)
+    }
+  } finally { globalThis.fetch = originalFetch }
 })
 
-test('client refuses non-live and incomplete responses', async () => {
-  const originalFetch = globalThis.fetch
-  const questions = { test: { type: 'noul', instructions: '测试' } }
-  try {
-    for (const response of [
-      { ok: true, mode: 'simulated', data: { answers: { test: { noul: 0.5 } } } },
-      { ok: true, mode: 'live', data: { answers: {} } },
-    ]) {
-      globalThis.fetch = async () => new Response(JSON.stringify(response), { status: 200 })
-      const result = await callJev('测试', questions)
-      assert.equal(result.ok, false)
-      assert.equal(result.data, undefined)
-    }
-  } finally {
-    globalThis.fetch = originalFetch
+test('unsupported input, changed questions and boxes fail honestly', async () => {
+  for (const result of [
+    await callJev('自定义内容', moderateQuestions),
+    await callJev(typeTabs[0].examples[0].state, { is_urgent: { ...typeTabs[0].questions.is_urgent, instructions: '不同题目' } }),
+    await callBox('agent.jpg', 'custom target'),
+    await callBox('other.jpg', boxImages[0].targets[0].target),
+  ]) {
+    assert.equal(result.ok, false)
+    assert.equal(result.mode, 'mock')
+    assert.match(result.error!, /离线模拟/)
+    assert.equal(result.data, undefined)
   }
+  const controller = new AbortController()
+  controller.abort()
+  assert.equal((await callJev('', {}, controller.signal)).ok, false)
+  assert.equal((await callBox('', '', controller.signal)).ok, false)
+})
+
+test('scripted typing reaches simulated states and manual selection retains custom text', async () => {
+  let memory = initialMemory
+  for (const [text, expected] of [['明天', 'input'], ['明天中午', 'choose'], ['明天中午和小王', 'ghost'], [shiftExamples[0], 'committed']] as const) {
+    const result = await callJev(text, shiftQuestions)
+    assert.equal(result.ok, true)
+    const intent = result.data.answers.intent
+    assert.ok(Math.abs(Object.values<number>(intent.probabilities).reduce((sum, probability) => sum + probability, 0) - 1) < 1e-9)
+    memory = decide(memory, { value: intent.choice, confidence: intent.confidence, probabilities: intent.probabilities }, text)
+    assert.equal(memory.ui.kind, expected)
+    if (expected === 'ghost') assert.equal(promote(memory).ui.kind, 'committed')
+  }
+  assert.equal((await callJev('自定义内容', shiftQuestions)).ok, false)
+  const selected = force('note', '自定义内容')
+  assert.deepEqual(selected.ui, { kind: 'committed', intent: 'note', forced: true })
+  assert.equal(selected.forcedText, '自定义内容')
+})
+
+test('equivalent JSON state matches VIP fixtures', async () => {
+  const scenario = scenarios[2]
+  const state = JSON.stringify(JSON.parse(scenario.examples[1].state))
+  assert.equal((await callJev(state, scenario.questions)).data.answers.route.choice, 'auto_refund')
 })

@@ -3,7 +3,7 @@ withDefaults(defineProps<{ mode?: string; ms?: number; title: string; timeLabel?
 </script>
 <template>
   <div class="dbar demo-timing">
+    <span class="dchip">离线模拟</span>
     <span class="dspacer" />
-    <span v-if="ms != null" class="dchip">{{ timeLabel }} {{ ms }} ms</span>
   </div>
 </template>

@@ -86,6 +86,16 @@ watch(text, (value) => {
     localFallbackReason.value = ''
     return
   }
+  if (memory.value.ui.kind === 'committed' && memory.value.ui.forced) {
+    memory.value = force(memory.value.ui.intent, value)
+    result.value = null
+    answers.value = {}
+    intent.value = null
+    loading.value = false
+    urgent.value = false
+    localFallbackReason.value = ''
+    return
+  }
   // 保留卡片状态，让判断结果通过状态机平滑切换；旧请求仍立即作废。
   result.value = null
   loading.value = true
@@ -110,7 +120,7 @@ async function ask(value = text.value, my = sequence) {
   loading.value = false
   if (!response.ok) {
     memory.value = initialMemory; answers.value = {}; intent.value = null; result.value = null
-    localFallbackReason.value = timedOut ? '请求超时，请重试。' : `Jev 请求失败：${response.error || '网络错误'}`
+    localFallbackReason.value = timedOut ? '模拟处理超时，请重试。' : response.error || '离线模拟失败'
     return
   }
   const apiAnswers = response.data?.answers
@@ -235,7 +245,7 @@ const baseLightness = computed(() => Math.round((hexToOklch(pickedColor.value ||
 const paletteShades = computed(() => card.value?.hex ? shades(card.value.hex) : [])
 
 function saveCurrent() {
-  if (!active.value || !text.value.trim() || loading.value || localFallbackReason.value || !result.value?.ok) return
+  if (!active.value || !text.value.trim() || loading.value || (!result.value?.ok && !(memory.value.ui.kind === 'committed' && memory.value.ui.forced))) return
   const item: SavedCard = { key: active.value, icon: CARDS[active.value].icon, name: CARDS[active.value].name, text: text.value }
   if (editing.value !== null) saved.value.splice(editing.value, 1, item)
   else saved.value.unshift(item)
@@ -269,15 +279,15 @@ function requestType(key: CardKey, sample: string) {
   text.value = sample
   clearTimeout(debounce)
   clearTimeout(requestTimeout)
-  const my = ++sequence
+  ++sequence
   controller?.abort()
   result.value = null
   answers.value = {}
   intent.value = null
-  memory.value = initialMemory
+  memory.value = force(key, sample)
   localFallbackReason.value = ''
+  loading.value = false
   requestedType.value = key
-  void ask(sample, my)
   nextTick(() => input.value?.focus())
 }
 function openPalette() { paletteOpen.value = true; paletteQuery.value = ''; paletteIndex.value = 0; nextTick(() => paletteInput.value?.focus()) }
@@ -330,7 +340,7 @@ onBeforeUnmount(() => {
 
 <template>
   <section class="shift-shell" aria-label="Jev 中文卡片变形演示">
-    <div v-if="result?.wall != null && !loading" class="shift-response-time">响应时长 {{ result.wall }} ms</div>
+    <div class="shift-response-time">离线模拟</div>
     <main class="shift-main">
       <div class="morph-shell" :class="{ expanded: active }">
       <div class="input-wrap" :class="{ 'has-result': active || ui.kind === 'choose' }">
@@ -375,13 +385,13 @@ onBeforeUnmount(() => {
         </Transition>
       </div>
       </div>
-      <div v-if="!text.trim() && !saved.length" class="input-hint">输入计划、清单、颜色或算式，生成对应卡片。</div>
+      <div v-if="!text.trim() && !saved.length" class="input-hint">逐步输入「明天」「明天中午」「明天中午和小王」体验模拟状态。</div>
       <div v-if="!text.trim() && !saved.length" class="palette-hint">按 <button @click="openPalette"><kbd>/</kbd></button> 查看全部 19 种卡片类型。</div>
-      <div v-if="text.trim() && !loading && result?.ok && ui.kind === 'input'" class="uncertain-hint" role="status" aria-live="polite">
+      <div v-if="text.trim() && !loading && (result?.ok || localFallbackReason) && ui.kind === 'input'" class="uncertain-hint" role="status" aria-live="polite">
         <span>暂时无法确定卡片类型。请补充时间、地点或具体事项，</span><button @click="openPalette">或手动选择类型</button>。
       </div>
       <div v-if="ui.kind === 'choose'" class="choose-options choice-inline"><button v-for="(option, index) in ui.options" :key="option" class="choice-card" :class="{ selected: index === chooseIndex }" @click="chooseIntent(option)">{{ CARDS[option].name }} · {{ pct(intent?.probabilities[option] ?? 0) }}</button></div>
-      <div v-if="loading || localFallbackReason" class="source-hint" role="status" aria-live="polite"><span>{{ loading ? '正在调用 Jev…' : localFallbackReason }}</span><button v-if="localFallbackReason && !loading" class="retry-link" @click="retry">重试请求</button></div>
+      <div v-if="loading || localFallbackReason" class="source-hint" role="status" aria-live="polite"><span>{{ loading ? '正在读取离线模拟…' : localFallbackReason }}</span><button v-if="localFallbackReason && !loading" class="retry-link" @click="retry">重试请求</button></div>
 
       <div v-if="saved.length" class="saved-stack"><div v-for="(item, index) in saved" v-show="index !== editing" :key="`${item.text}-${index}`" class="saved-row"><button class="saved-open" @click="reopenSaved(index)"><component :is="PALETTE_ICONS[item.key || allIntents.find(k => CARDS[k].name === item.name) || 'note']" /><span>{{ item.text }}</span></button><button class="saved-delete" aria-label="删除已保存卡片" @click="removeSaved(index)">×</button></div></div>
     </main>

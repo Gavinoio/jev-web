@@ -177,7 +177,7 @@ const note = computed(() => img.value.targets[ci.value]?.note)
           <button v-for="(t, i) in img.targets" :key="t.target" class="chip" :class="{ on: ci === i }" @click="pickTarget(i)">{{ t.label }}</button>
         </div>
         <div class="chips">
-          <input v-model="target" class="tin" placeholder="要找什么（英文描述更稳）" />
+          <input v-model="target" class="tin" placeholder="仅支持预设目标的完整文字" aria-label="定位目标（仅支持预设目标）" />
           <button class="run" :disabled="bloading" @click="runBox">{{ bloading ? '定位中…' : bres && !bres.ok ? '↻ 重试定位' : 'Run request' }}</button>
         </div>
         <div v-if="note" class="exp none"><b>看点</b><span class="expn">{{ note }}</span></div>

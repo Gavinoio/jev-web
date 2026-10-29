@@ -53,9 +53,9 @@ async function run() {
     <div v-if="lastErr" class="err" style="margin:4px 0">有 {{ fails }} 条失败，最近一次：{{ lastErr }}</div>
     <div class="progress"><span :style="{ width: (done / N) * 100 + '%' }" /></div>
     <div class="stats five">
-      <div><b>{{ (wall / 1000).toFixed(2) }}s</b><small>总耗时</small></div>
-      <div><b>{{ avg }}ms</b><small>平均响应时长</small></div>
-      <div><b>${{ estCost(tokens).toFixed(5) }}</b><small>估算花费（输入）</small></div>
+      <div><b>离线</b><small>不产生请求费用</small></div>
+      <div><b>预设</b><small>无真实响应时长</small></div>
+      <div><b>模拟</b><small>不计 token</small></div>
       <div><b :class="{ okc: acc >= 90 }">{{ rows.length ? acc + '%' : '–' }}</b><small>与预设答案一致</small></div>
       <div><b>{{ fails }}</b><small>失败</small></div>
     </div>
@@ -65,7 +65,7 @@ async function run() {
         <div class="qbox" style="max-height:190px"><QView :questions="batchQuestions" compact /></div>
       </div>
       <div class="pr">
-        <div class="dlabel">最近完成的 8 条 · 材料 / 预设答案 / Jev 答案 / 把握度</div>
+        <div class="dlabel">最近完成的 8 条 · 材料 / 预设答案 / 模拟答案 / 模拟把握度</div>
         <table class="bt">
           <tbody>
             <tr v-for="r in shown" :key="r.i">
@@ -79,6 +79,6 @@ async function run() {
         </table>
       </div>
     </div>
-    <div class="hint" style="margin-top:4px">花费按输入 token 数估算；未返回用量时按文本长度粗估。实际价格与账单以控制台为准。</div>
+    <div class="hint" style="margin-top:4px">模拟答案由预设标签生成，一致率不代表模型准确率，耗时与费用均不是线上测量。</div>
   </div>
 </template>

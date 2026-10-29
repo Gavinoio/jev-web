@@ -371,7 +371,7 @@ class: demo-slide demo-types-slide
 <DemoTypes />
 
 <!--
-演示步骤：各选一条是非题、单选题与打分题，观察返回的概率和结果；单选可选 other 示例。框选时选择图片中的不同目标，观察返回的坐标和框。把握度会随模型版本和网络浮动，现场只描述当前返回。
+演示步骤：选择预设例子观察离线模拟的概率和框；所有结果是演示数据，不是模型输出或实测把握度。
 Box 与图片输入需在请求中加 TypeSafe-Danger-Zone-Images: true，官方标注 Dreamer-ready，格式和准确度可能变化，适合原型。
 请求失败时说明错误并重试，不引用旧的概率数字。
 -->
@@ -418,26 +418,33 @@ const res = await fetch('https://api.typesafe.ai/v1/systemone', {
 
 ---
 
-# 为什么快：不写字，一次算完
+# 为什么快：从生成文字到直接判断
 
 <div class="eyebrow">为什么值得用 · 快</div>
 
-<div class="cols c2" style="align-items:start;gap:20px">
+<div style="display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:start;margin-top:16px">
 <div>
-<img class="shot" src="/img/parallel-flow.svg" />
-
-<div class="card cy compact" style="margin-top:12px"><div class="tag">为什么更适合判断</div><p>提前给出选项，Jev 直接返回结果和概率，不需要逐字生成一段回答；同一份材料可一次回答多道题。</p></div>
-
+<img class="shot" src="/img/parallel-flow.svg" alt="逐词生成文本与结构化判断的输出路径对比" style="width:100%" />
 </div>
 <div>
-<div class="cols c3" style="margin-bottom:12px;gap:10px">
-<div class="card"><div class="kpi" style="font-size:34px">70–500<small>ms</small></div><div class="kcap">官方单次延迟</div></div>
-<div class="card"><div class="kpi" style="font-size:34px">~76<small>ms</small></div><div class="kcap">网友自报中位数</div></div>
-<div class="card"><div class="kpi gn" style="font-size:34px">~250<small>ms</small></div><div class="kcap">本机实测（含跨境网络）</div></div>
+<div class="card cy" style="padding:18px 20px">
+<div class="tag">核心思路</div>
+<p style="font-size:20px;line-height:1.5;margin:10px 0 0">预设题目和选项，直接返回<b>判断结果与概率</b>，无需生成一段回答。</p>
 </div>
-<div class="card pu compact"><div class="tag">一次工单判断</div><p>同一条客户反馈 → 同时判断<b>诉求类型、是否退款、紧急程度</b> → 应用读取结果并处理。</p></div>
-<div class="cap" style="margin-top:10px">数字来自不同来源和测量条件，不能直接横向比较；实际延迟受模型、请求和网络影响。</div>
+<div style="margin-top:16px;padding:15px 20px;background:rgba(167,139,250,.08);border-left:3px solid var(--pu);border-radius:6px">
+<div style="font-size:14px;font-weight:700;color:var(--pu)">工单示例 · 一份材料，多道判断</div>
+<p style="font-size:17px;line-height:1.5;margin:8px 0 0">一条客户反馈，同时判断诉求类型、是否退款和紧急程度。</p>
 </div>
+</div>
+</div>
+
+<div style="margin-top:18px;border-top:1px solid var(--line);padding-top:14px">
+<div style="display:flex;align-items:baseline;gap:34px">
+<div style="font-size:16px;font-weight:700;color:var(--tx2);white-space:nowrap">延迟参考</div>
+<div style="font-size:16px;color:var(--tx2)">官方单次 <b style="font-family:var(--mono);font-size:25px;color:var(--cy);margin-left:6px;white-space:nowrap">70–500 ms</b></div>
+<div style="font-size:16px;color:var(--tx2)">本机单次 <b style="font-family:var(--mono);font-size:25px;color:var(--gn);margin-left:6px;white-space:nowrap">~250 ms</b></div>
+</div>
+<div style="font-size:14px;color:var(--tx2);margin-top:9px">测量条件不同，不可直接比较；实际延迟需在自己的网络和请求条件下测试。</div>
 </div>
 
 <!--
@@ -500,7 +507,7 @@ class: demo-slide demo-types-slide
 <DemoTicket />
 
 <!--
-演示步骤：在工单分流中先选一条信息清楚的请求，再选一条含糊的请求，比较第一名与第二名概率；拖动“自动放行线”和“复核线”，说明阈值由应用设定。切到 VIP 路由，用相同用户话术配不同客户资料对比判断结果；VIP 信息来自应用状态，不是 Jev 自己查询。结果和把握度会随请求变化，不报固定百分比。
+演示步骤：选择预设工单并调整阈值，比较离线模拟结果；VIP 场景使用预设客户资料。概率和把握度是模拟数据，不代表模型判断。
 请求失败时说明错误并重试。
 -->
 
@@ -581,7 +588,7 @@ class: demo-slide
 <div class="eyebrow">真实案例 · 现场演示</div>
 
 <DemoBatch />
-<!-- 点击并行分类，观察耗时、费用、失败数和与预设答案的一致率。样例一致率不代表真实业务准确率。 -->
+<!-- 点击批量分类；结果来自预设标签，不代表真实模型准确率、耗时或费用。 -->
 
 ---
 
@@ -845,8 +852,8 @@ class: demo-slide shift-slide
 <DemoShift />
 
 <!--
-演示顺序：在中央输入日程、提醒或清单，说明日期、姓名由代码解析；再试计时或投票，操作卡片控件。按 / 查看并选择其他类型，慢慢输入未完成的话，观察空白、虚影或二选一状态。<br/>
-输入框下方在请求中或失败时会显示提示；Tab 确认虚影，Enter 保存，Esc 清空。按 / 手动选型后也会调用 Jev 获取其他判断信号。
+演示顺序：逐步输入「明天」→「明天中午」→「明天中午和小王」→「明天中午和小王、小李吃饭」，观察预设模拟的输入、二选一、虚影和卡片状态；每一步稍作停顿。按 / 查看并选择其他类型。<br/>
+输入框仅对预设例子及上述指定阶段返回离线模拟结果；其他自定义内容不会被自动判断，但可手动选择卡片类型。Tab 确认虚影，Enter 保存，Esc 清空。
 -->
 
 ---
