@@ -299,7 +299,7 @@ export function parseColor(text: string) {
   if (h) hex = h[1].length === 3 ? '#' + [...h[1]].map((c) => c + c).join('') : '#' + h[1]
   else if (rgb) hex = '#' + [rgb[1], rgb[2], rgb[3]].map((v) => pad2(Math.min(255, +v))).join('')
   else {
-    const name = Object.keys(COLOR_NAMES).sort((a, b) => b.length - a.length).find((n) => text.includes(n) || text.includes(n.replace(/色$/, '')))
+    const name = Object.keys(COLOR_NAMES).sort((a, b) => b.length - a.length).find((name) => text.includes(name) || (name.length > 2 && text.includes(name.replace(/色$/, ''))) || text.trim() === name.replace(/色$/, ''))
     if (name) hex = COLOR_NAMES[name]
   }
   if (!hex) return null
@@ -464,9 +464,15 @@ export function parseContact(text: string) {
 }
 
 export function parseLink(text: string) {
-  const url = text.match(/(?:https?:\/\/|www\.)[^\s，,。！？?]+/i)?.[0] || ''
-  const title = clean(text.replace(/https?:\/\//i, '').replace(url, ' ').replace(/(?:收藏|保存|记下|这个|链接|网址|网页|链接到)/g, ' ')) || (url ? new URL(url.startsWith('www.') ? `https://${url}` : url).hostname : '新链接')
-  return { title, url: url ? (url.startsWith('www.') ? `https://${url}` : url) : '' }
+  const matched = text.match(/(?:https?:\/\/|www\.)[^\s，,。！？]+/i)?.[0] || ''
+  const title = clean(text.replace(matched, ' ').replace(/(?:收藏|保存|记下|这个|链接到|链接|网址|网页)/g, ' '))
+  try {
+    const parsed = new URL(matched.startsWith('www.') ? `https://${matched}` : matched)
+    if (!parsed.hostname || !['http:', 'https:'].includes(parsed.protocol)) return { title: title || '新链接', url: '' }
+    return { title: title || parsed.hostname, url: matched.startsWith('www.') ? `https://${matched}` : matched }
+  } catch {
+    return { title: title || '新链接', url: '' }
+  }
 }
 
 const CITY_ZONES: Record<string, { label: string; zone: string }> = {
@@ -507,8 +513,10 @@ export function parseTimezone(text: string, now = new Date()) {
 
 export function parseGoal(text: string) {
   const values = [...text.matchAll(new RegExp(NUM, 'g'))].map((m) => toNum(m[1]))
-  const current = values[0] ?? 0
-  const target = values[1] ?? 0
+  const currentMatch = text.match(new RegExp(`(?:已经|已|目前|读完|读了|完成|存了|已存)[^\\d零〇一二两三四五六七八九十百千万,，。]*${NUM}`))
+  const targetMatch = text.match(new RegExp(`(?:目标|计划)[^\\d零〇一二两三四五六七八九十百千万,，。]*${NUM}`))
+  const current = currentMatch ? toNum(currentMatch[1]) : values[0] ?? 0
+  const target = targetMatch ? toNum(targetMatch[1]) : values[1] ?? 0
   const unit = text.match(/本书|本|页|公里|千米|元|块|次|个/)?.[0] || '项'
   const label = clean(text.replace(/(?:我|已经|已|目前|目前已|读完|读了|完成|存了|已存|目标是?|计划|想要|达到|本书|本|页|公里|千米|元|块|次|个|\d+(?:\.\d+)?)/g, ' ')) || (unit === '元' || unit === '块' ? '储蓄目标' : '进度目标')
   return { label, current, target, unit, percent: target ? Math.min(100, Math.round((current / target) * 100)) : 0, remaining: Math.max(0, target - current) }

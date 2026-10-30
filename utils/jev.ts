@@ -1,6 +1,7 @@
 import { batchQuestions, batchSamples, moderateExamples, moderateQuestions, scenarios, demoTicketExamples } from './scenarios.ts'
 import { boxImages, typeTabs } from './typeDemos.ts'
-import { shiftExamples, shiftQuestions } from './shift.ts'
+import { shiftQuestions } from './shift.ts'
+import { classifyShift } from './shiftMock.ts'
 
 export type Mode = 'mock'
 export interface JevResult { ok: boolean; mode?: Mode; ms?: number; error?: string; data?: any; wall?: number }
@@ -36,12 +37,6 @@ for (const scenario of scenarios) for (const example of scenario.examples) {
 for (const example of moderateExamples) fixtures.push({ state: example.state, questions: moderateQuestions, values: example.expected as Record<string, boolean | string | number> || { harassment: 0.45, scam: 0.1, action: 'allow' }, confidence: example.expected ? 0.95 : 0.5 })
 for (const sample of batchSamples(100)) fixtures.push({ state: sample.text, questions: batchQuestions, values: { category: sample.expected } })
 
-const shiftIntents = ['event', 'event', 'reminder', 'todo', 'timer', 'habit', 'color', 'split', 'expense', 'convert', 'calc', 'travel', 'poll', 'contact', 'link', 'countdown', 'timezone', 'random', 'goal', 'note', 'none']
-for (const [index, state] of shiftExamples.entries()) {
-  const values: Record<string, boolean | string | number> = { intent: shiftIntents[index], readiness: 2, isQuestion: /[？?]|多少|几天|几点/.test(state), recurring: index === 5, urgency: index === 2 ? 2 : 0, tone: 'neutral', eventMode: index === 1 ? 'video_call' : index === 0 ? 'in_person' : 'unspecified', transport: index === 11 ? 'train' : 'unspecified', tripType: index === 11 ? 'leisure' : 'unspecified', expenseCategory: index === 8 ? 'transport' : 'other', colorMood: 'cool', timerKind: index === 4 ? 'focus' : 'unspecified', hasExplicitOptions: index === 12, isShoppingList: index === 3 }
-  fixtures.push({ state, questions: shiftQuestions, values })
-}
-
 function cancelled(signal?: AbortSignal): JevResult | undefined {
   return signal?.aborted ? { ok: false, mode: 'mock', error: '操作已取消' } : undefined
 }
@@ -49,16 +44,15 @@ function cancelled(signal?: AbortSignal): JevResult | undefined {
 export async function callJev(state: string, questions: Record<string, any>, signal?: AbortSignal): Promise<JevResult> {
   const aborted = cancelled(signal)
   if (aborted) return aborted
-  const shiftStages: Record<string, { choice: string; probabilities: Record<string, number> }> = {
-    '明天': { choice: 'none', probabilities: { none: 0.8, event: 0.1, reminder: 0.1 } },
-    '明天中午': { choice: 'event', probabilities: { event: 0.45, reminder: 0.4, none: 0.15 } },
-    '明天中午和小王': { choice: 'event', probabilities: { event: 0.6, reminder: 0.2, none: 0.2 } },
+  if (canonical(questions) === canonical(shiftQuestions)) {
+    const classified = classifyShift(state)
+    const answers = Object.fromEntries(Object.entries(questions).map(([key, question]) => [key, answer(question, classified.values[key])]))
+    answers.intent = classified.intent
+    return { ok: true, mode: 'mock', data: { model: 'offline-rules', answers }, ms: 0, wall: 0 }
   }
-  const stage = canonical(questions) === canonical(shiftQuestions) ? shiftStages[state] : undefined
-  const fixture = fixtures.find((item) => normalizeState(item.state) === normalizeState(stage ? shiftExamples[0] : state) && canonical(item.questions) === canonical(questions))
+  const fixture = fixtures.find((item) => normalizeState(item.state) === normalizeState(state) && canonical(item.questions) === canonical(questions))
   if (!fixture) return { ok: false, mode: 'mock', error: '离线模拟仅支持预设材料和原始题目；自定义内容无法判断。' }
   const answers = Object.fromEntries(Object.entries(questions).map(([key, question]) => [key, answer(question, fixture.values[key], fixture.confidence)]))
-  if (stage) answers.intent = { type: 'choice', choice: stage.choice, confidence: stage.probabilities[stage.choice], probabilities: Object.fromEntries(Object.keys(shiftQuestions.intent.criteria).map((key) => [key, stage.probabilities[key] ?? 0])) }
   return { ok: true, mode: 'mock', data: { model: 'offline-mock', answers }, ms: 0, wall: 0 }
 }
 

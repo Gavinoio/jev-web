@@ -134,7 +134,7 @@ async function ask(value = text.value, my = sequence) {
   })
   if (invalidAnswer || !actualIntent?.probabilities || typeof actualIntent.confidence !== 'number') {
     memory.value = initialMemory; answers.value = {}; intent.value = null; result.value = null
-    localFallbackReason.value = 'Jev 返回结果不完整，请重试。'
+    localFallbackReason.value = '本地识别结果不完整，请重试。'
     return
   }
   result.value = response
@@ -340,14 +340,14 @@ onBeforeUnmount(() => {
 
 <template>
   <section class="shift-shell" aria-label="Jev 中文卡片变形演示">
-    <div class="shift-response-time">离线模拟</div>
+    <div class="shift-response-time">本地规则演示 · 非模型判断</div>
     <main class="shift-main">
       <div class="morph-shell" :class="{ expanded: active }">
       <div class="input-wrap" :class="{ 'has-result': active || ui.kind === 'choose' }">
         <input ref="input" v-model="text" class="shift-input" :placeholder="placeholder" aria-label="输入一句话创建卡片" @keydown="onInputKey" />
         <button v-if="text" class="clear-input" aria-label="清空输入" title="清空" @click="text = ''">×</button>
       </div>
-      <div v-if="active && !loading && !localFallbackReason" class="result-stage">
+      <div v-if="active && !localFallbackReason" class="result-stage" :aria-busy="loading">
         <Transition name="card-morph" mode="out-in">
           <article :key="active" class="result-card" :class="{ ghost }">
             <div class="card-topline">
@@ -380,18 +380,18 @@ onBeforeUnmount(() => {
             <template v-else-if="active === 'note'"><div class="note-view">{{ text }}</div><div class="fine-print">这条想法已整理成笔记草稿。</div></template>
 
             </div>
-            <div class="card-actions" aria-live="polite"><span v-if="ghost"><kbd>Tab</kbd> 确认{{ CARDS[active].name }}卡片</span><span v-else><kbd>Esc</kbd> {{ editing !== null ? '取消' : '清空' }}</span><button v-if="!ghost" class="save-button" @click="saveCurrent">{{ editing !== null ? '保存' : '添加' }}{{ CARDS[active].name }} ↵</button></div>
+            <div class="card-actions" aria-live="polite"><span v-if="ghost"><kbd>Tab</kbd> 确认{{ CARDS[active].name }}卡片</span><span v-else><kbd>Esc</kbd> {{ editing !== null ? '取消' : '清空' }}</span><button v-if="!ghost" class="save-button" :disabled="loading" @click="saveCurrent">{{ editing !== null ? '保存' : '添加' }}{{ CARDS[active].name }} ↵</button></div>
           </article>
         </Transition>
       </div>
       </div>
-      <div v-if="!text.trim() && !saved.length" class="input-hint">逐步输入「明天」「明天中午」「明天中午和小王」体验模拟状态。</div>
+      <div v-if="!text.trim() && !saved.length" class="input-hint">试试「后天下午和小李开会」「360元4人平摊」，不必照抄示例。</div>
       <div v-if="!text.trim() && !saved.length" class="palette-hint">按 <button @click="openPalette"><kbd>/</kbd></button> 查看全部 19 种卡片类型。</div>
       <div v-if="text.trim() && !loading && (result?.ok || localFallbackReason) && ui.kind === 'input'" class="uncertain-hint" role="status" aria-live="polite">
         <span>暂时无法确定卡片类型。请补充时间、地点或具体事项，</span><button @click="openPalette">或手动选择类型</button>。
       </div>
       <div v-if="ui.kind === 'choose'" class="choose-options choice-inline"><button v-for="(option, index) in ui.options" :key="option" class="choice-card" :class="{ selected: index === chooseIndex }" @click="chooseIntent(option)">{{ CARDS[option].name }} · {{ pct(intent?.probabilities[option] ?? 0) }}</button></div>
-      <div v-if="loading || localFallbackReason" class="source-hint" role="status" aria-live="polite"><span>{{ loading ? '正在读取离线模拟…' : localFallbackReason }}</span><button v-if="localFallbackReason && !loading" class="retry-link" @click="retry">重试请求</button></div>
+      <div v-if="loading || localFallbackReason" class="source-hint" role="status" aria-live="polite"><span>{{ loading ? '正在本地识别…' : localFallbackReason }}</span><button v-if="localFallbackReason && !loading" class="retry-link" @click="retry">重试请求</button></div>
 
       <div v-if="saved.length" class="saved-stack"><div v-for="(item, index) in saved" v-show="index !== editing" :key="`${item.text}-${index}`" class="saved-row"><button class="saved-open" @click="reopenSaved(index)"><component :is="PALETTE_ICONS[item.key || allIntents.find(k => CARDS[k].name === item.name) || 'note']" /><span>{{ item.text }}</span></button><button class="saved-delete" aria-label="删除已保存卡片" @click="removeSaved(index)">×</button></div></div>
     </main>
