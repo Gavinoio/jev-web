@@ -340,7 +340,6 @@ onBeforeUnmount(() => {
 
 <template>
   <section class="shift-shell" aria-label="Jev 中文卡片变形演示">
-    <div class="shift-response-time">本地规则演示 · 非模型判断</div>
     <main class="shift-main">
       <div class="morph-shell" :class="{ expanded: active }">
       <div class="input-wrap" :class="{ 'has-result': active || ui.kind === 'choose' }">
@@ -385,8 +384,8 @@ onBeforeUnmount(() => {
         </Transition>
       </div>
       </div>
-      <div v-if="!text.trim() && !saved.length" class="input-hint">试试「后天下午和小李开会」「360元4人平摊」，不必照抄示例。</div>
-      <div v-if="!text.trim() && !saved.length" class="palette-hint">按 <button @click="openPalette"><kbd>/</kbd></button> 查看全部 19 种卡片类型。</div>
+      <div v-if="!text.trim() && !saved.length" class="input-hint">输入一个计划、清单、颜色或金额，它就会变成一张卡片</div>
+      <div v-if="!text.trim() && !saved.length" class="palette-hint">按下 <button @click="openPalette"><kbd>/</kbd></button> 查看全部 19 种卡片类型</div>
       <div v-if="text.trim() && !loading && (result?.ok || localFallbackReason) && ui.kind === 'input'" class="uncertain-hint" role="status" aria-live="polite">
         <span>暂时无法确定卡片类型。请补充时间、地点或具体事项，</span><button @click="openPalette">或手动选择类型</button>。
       </div>
@@ -419,7 +418,6 @@ onBeforeUnmount(() => {
 .brand-mark { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 6px; color: #fff; background: #252722; font: italic 700 14px Georgia, serif; }
 .top-controls { gap: 13px; }
 .mode-pill { gap: 5px; color: #73766e; font-size: 10px; white-space: nowrap; }
-.shift-response-time { position: absolute; top: 12px; right: 16px; z-index: 2; color: #73766e; font-size: 11px; }
 .mode-pill small { color: #a0a197; font: 9px ui-monospace, monospace; margin-left: 2px; }
 .mode-pill.live { color: #397554; }
 .status-dot, .confidence-dot { width: 6px; height: 6px; border-radius: 50%; background: #b8b9b0; }
@@ -524,9 +522,9 @@ onBeforeUnmount(() => {
 /* 初始画面只呈现输入框；结果出现后沿同一中轴展开。 */
 .shift-shell { width: 100%; height: 630px; flex: none; border: 0; border-radius: 0; box-shadow: none; background: #fafaf9; }
 .shift-main { padding: 139px 20px 24px; }
-.input-wrap { box-sizing: border-box; width: min(375px, 100%); height: 49px; padding: 0 14px; border: 1px solid #e8e7e4; border-radius: 19px; box-shadow: 0 1px 2px #1a1a190a; }
+.input-wrap { box-sizing: border-box; width: min(340px, 100%); height: 44px; padding: 0 14px; border: 1px solid #e8e7e4; border-radius: 19px; box-shadow: 0 1px 2px #1a1a190a; }
 .input-wrap:focus-within, .input-wrap.has-result { border-color: #d6d6d6; box-shadow: 0 1px 3px #00000012; }
-.shift-input { min-height: 0; font-size: 16px; }
+.shift-input { min-height: 0; font-size: 15px; }
 .shift-input::placeholder { color: #777; opacity: 1; }
 .clear-input { border: 0; background: transparent; color: #999; }
 .input-hint { min-height: 19px; margin-top: 5px; color: #666; font-size: 10px; text-align: center; }
@@ -551,7 +549,7 @@ onBeforeUnmount(() => {
 .palette-icon svg { width: 12px; height: 12px; stroke-width: 1.75; }
 .palette-option b { flex: 0 0 54px; color: #1a1a19 !important; font-weight: 500; }
 .palette-option > small { min-width: 0; margin: 0; overflow: hidden; color: #706e68; font: inherit; font-size: 8.7px; text-overflow: ellipsis; white-space: nowrap; }
-.morph-shell { box-sizing: border-box; width: min(375px, 100%); margin: 0 auto; overflow: hidden; border: 1px solid #e8e7e4; border-radius: 19px; background: white; box-shadow: 0 1px 2px #1a1a190a; transition: border-color .2s, box-shadow .2s; }
+.morph-shell { box-sizing: border-box; width: min(340px, 100%); margin: 0 auto; overflow: hidden; border: 1px solid #e8e7e4; border-radius: 19px; background: white; box-shadow: 0 1px 2px #1a1a190a; transition: border-color .2s, box-shadow .2s; }
 .morph-shell:focus-within, .morph-shell.expanded { border-color: #526aff; box-shadow: 0 0 0 3px #eef1fd; }
 .morph-shell .input-wrap, .morph-shell .input-wrap:focus-within, .morph-shell .input-wrap.has-result { width: 100%; border: 0; border-radius: 0; box-shadow: none; background: transparent; }
 .result-stage { width: 100%; margin: 0; }

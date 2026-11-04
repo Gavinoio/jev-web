@@ -19,6 +19,10 @@ const rows: Row[] = [
   { name: 'Kimi K3.1 Pro', vendor: '月之暗面', tier: '旗舰', inP: 2, outP: 10 },
 ]
 
+const LOGO: Record<string, string> = {
+  TypeSafe: '/img/logos/typesafe.png', Anthropic: '/img/logos/claude-color.svg', OpenAI: '/img/logos/openai.svg',
+  智谱: '/img/logos/zhipu-color.svg', DeepSeek: '/img/logos/deepseek-color.svg', 月之暗面: '/img/logos/kimi-color.svg',
+}
 const cost = (r: Row) => CALLS_M * (IN * r.inP + OUT * r.outP)
 const base = cost(rows[0])
 const max = Math.max(...rows.map(cost))
@@ -38,11 +42,12 @@ const times = (r: Row) => (r.hot ? '基准' : (cost(r) / base >= 10 ? Math.round
     </div>
 
     <div class="pc-head">
-      <span>模型</span><span class="r">输入</span><span class="r">输出</span><span>100 万次总费用</span><span class="r">倍数</span>
+      <span>模型</span><span class="r">输入</span><span class="r">输出</span><span>跑完 100 万次的总费用</span><span class="r">是 Jev 的</span>
     </div>
     <div v-for="(r, i) in rows" :key="r.name" class="pc-row" :class="{ hot: r.hot, flag: r.tier === '旗舰', split: i > 0 && r.tier !== rows[i - 1].tier }">
       <span class="pc-name">
         <i class="pc-tier">{{ r.tier }}</i>
+        <img class="pc-logo" :class="{ sq: r.vendor === 'TypeSafe' }" :src="LOGO[r.vendor]" :alt="r.vendor + ' logo'" />
         <b>{{ r.name }}</b>
         <small>{{ r.name.startsWith(r.vendor) ? r.note : r.vendor + (r.note ? ' · ' + r.note : '') }}</small>
       </span>
@@ -67,7 +72,7 @@ const times = (r: Row) => (r.hot ? '基准' : (cost(r) / base >= 10 ? Math.round
 .pc-chip small { font-size: 11px; color: var(--tx2); }
 .pc-op { color: var(--cy); font-family: var(--mono); font-size: 20px; }
 
-.pc-head, .pc-row { display: grid; grid-template-columns: 270px 66px 60px 1fr 56px; gap: 12px; align-items: center; padding: 0 10px; }
+.pc-head, .pc-row { display: grid; grid-template-columns: 300px 66px 60px 1fr 56px; gap: 12px; align-items: center; padding: 0 10px; }
 .pc-head { font-size: 12px; color: var(--tx3); letter-spacing: 1px; padding-bottom: 4px; border-bottom: 1px solid var(--line); }
 .r { text-align: right; }
 .mono { font-family: var(--mono); }
@@ -75,6 +80,8 @@ const times = (r: Row) => (r.hot ? '基准' : (cost(r) / base >= 10 ? Math.round
 .pc-row.split { margin-top: 7px; border-top: 1px dashed var(--line); padding-top: 0; }
 .pc-row.hot { background: rgba(52,211,153,.10); box-shadow: inset 3px 0 0 var(--gn); }
 .pc-name { display: flex; align-items: baseline; gap: 8px; white-space: nowrap; overflow: hidden; }
+.pc-logo { width: 17px; height: 17px; align-self: center; flex: none; }
+.pc-logo.sq { border-radius: 4px; }
 .pc-name b { font-weight: 600; }
 .pc-name small { font-size: 11px; color: var(--tx2); }
 .pc-tier { font-style: normal; font-size: 10px; padding: 0 5px; border-radius: 4px; color: var(--cy); border: 1px solid rgba(56,189,248,.4); }
