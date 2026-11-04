@@ -411,30 +411,20 @@ Box 的历史资料标注需图片输入与 TypeSafe-Danger-Zone-Images 请求�
 
 ---
 
-# 为什么省：计费方式与成本估算
+# 为什么省：同样 100 万次判断，各家要花多少？
 
 <div class="eyebrow">核心优势 · 费用</div>
-<div class="cols c2" style="gap:18px;margin-top:18px;align-items:stretch">
-<div class="card cy compact">
-<div class="tag">已有资料中的价格记录 · 非实时报价</div>
-<div style="display:flex;align-items:baseline;gap:10px;margin:12px 0"><span class="kpi" style="font-size:48px">$0.042</span><span class="dim">/ 100 万输入 Token</span></div>
-<p>输出 Token <b>免费</b>；材料和题目都计入输入。多道题共用材料时，可以减少重复发送。</p>
-</div>
-<div class="card pu compact">
-<div class="tag">费用估算</div>
-<div style="display:flex;align-items:center;gap:8px;margin:16px 0;font-size:17px">
-<div class="node cy">400 Token<br/><small>每次请求</small></div><span class="arrow">×</span>
-<div class="node pu">100 万次<br/><small>调用</small></div><span class="arrow">→</span>
-<div class="node gn"><b>$16.80</b><br/><small>输入费用</small></div>
-</div>
-<p class="dim" style="font-size:15px">计算：400 × 100 万 ÷ 100 万 × $0.042</p>
-</div>
-</div>
-<div class="card am compact" style="margin-top:12px"><div class="tag">省钱不只看单价</div><p>实际费用还取决于<b>输入长度、调用次数、错误率和复核成本</b>。同一任务也要与规则或其他模型比较。</p></div>
-<div class="takeaway">便宜的请求不一定是便宜的方案：把调用、复核与维护成本一起算。</div>
+
+<PriceCompare />
+
+<div class="takeaway" style="margin-top:10px">同样的判断量，Jev 约为轻量模型的 1/3、旗舰模型的 1/60；但便宜不等于够用，要拿同一批数据比质量与复核成本。</div>
 
 <!--
-已有分享资料记录的披露日期为 2026-10-28：输入每百万 token 0.042 美元，输出免费。本轮未能重新获取官网正文，现场不称其为当前核验价格，打开官网与控制台确认后再用于实际预算。示例：400 × 100 万 ÷ 100 万 × 0.042 = 16.80 美元，仅为输入费用；材料和题目均计入输入。还要算复核与人工成本。来源入口：https://typesafe.ai/
+先讲场景，再看数字："400 输入 Token × 100 万次"的意思是：假设要判断 100 万条工单，每次把一条约 300 字的工单加上题目发给模型，约 400 个输入 Token；生成式模型只回一个分类标签，约 20 个输出 Token。Jev 输出免费，所以只算输入。
+算法：总费用 = 100 万次 × (400 × 输入单价 + 20 × 输出单价) ÷ 100 万。例：Jev = 400 × 0.042 = $16.80；Claude Haiku 5.5 = 400 × 0.10 + 20 × 0.50 = $50；Claude Sonnet 5.5 = 400 × 2 + 20 × 10 = $1,000。
+表里全部是官方 API 按量计费的标准价（美元 / 100 万 Token，不含税），价格核验日期 2026-11-04。Claude Code 的 Pro 订阅是包月使用额度，不按 Token 计价，不放进对比；Claude 走 API 时就是表中的 Haiku / Sonnet 价格，Opus 5.5 为 $4 / $20，同样场景约 $2,000。
+会改变结果的因素：缓存命中（多数家缓存命中价只有原价 1/10 左右）、Batch 折扣（Kimi K3 系列 6 折）、DeepSeek 高峰时段价格翻倍、开启推理（thinking）会多出大量输出 Token。生成式模型能做的事更多，单价低不代表同等效果。
+来源：Jev https://help.typesafe.ai/articles/5187202169-how-much-does-jev-cost ；Claude https://platform.claude.com/docs/en/about-claude/pricing ；OpenAI https://developers.openai.com/api/docs/pricing/ ；DeepSeek https://api-docs.deepseek.com/quick_start/pricing/ ；智谱 https://docs.z.ai/guides/overview/pricing ；Kimi https://platform.kimi.ai/docs/pricing/chat
 -->
 
 
