@@ -70,7 +70,8 @@ const onClick = (e: MouseEvent) => {
   zoomSrc.value = img.currentSrc || img.src
 }
 
-const onResize = () => { vw.value = window.innerWidth; vh.value = window.innerHeight; onScroll() }
+// 窗口缩放、平板旋转时也重新判断模式（部分浏览器不会触发 matchMedia 的 change 事件）
+const onResize = () => { vw.value = window.innerWidth; vh.value = window.innerHeight; isNarrow.value = narrow.matches; onScroll() }
 const onNarrow = (e: MediaQueryListEvent) => { isNarrow.value = e.matches }
 const onHash = () => { cur.value = pageFromHash() }
 onMounted(() => {

@@ -67,7 +67,7 @@ const vipState = (message: string, level: string, orders: number, spent: number)
 
 export const demoTicketExamples = {
   clear: { label: '礼包扣款', state: '买礼包扣了两次钱，道具还没到账！活动马上结束了，赶紧处理，太让人失望了！', expected: { is_urgent: true, department: 'billing', frustration: 2 }, note: '预设演示：账单诉求明确，同时包含时间压力与不满情绪' },
-  ambiguous: { label: '礼包异常', state: '礼包好像不对，价格变了，东西也找不到，帮我看看。', note: '预设演示：涉及价格、内容或功能，模拟低置信度并建议人工复核' },
+  ambiguous: { label: '礼包异常', state: '礼包好像不对，价格变了，东西也找不到，帮我看看。', note: '预设演示：涉及价格、内容或功能，模拟低把握度并建议人工复核' },
 }
 
 export const scenarios: Scenario[] = [

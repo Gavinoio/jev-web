@@ -14,7 +14,7 @@ export const typeTabs: TypeTab[] = [
   {
     id: 'noul',
     name: '是非题 Noul',
-    intro: '问一个"是不是"，返回"是"的概率（0–1）',
+    intro: '问一个“是不是”，返回“是”的概率（0–1）',
     questions: { is_urgent: ticketQuestions.is_urgent },
     examples: [
       { ...demoTicketExamples.clear, expected: { is_urgent: true } },
@@ -36,7 +36,7 @@ export const typeTabs: TypeTab[] = [
   {
     id: 'score',
     name: '打分题 Score',
-    intro: '在一把有顺序的"尺子"上打分，分数可以是小数',
+    intro: '在一把有顺序的“尺子”上打分，分数可以是小数',
     questions: { frustration: ticketQuestions.frustration },
     examples: [
       { label: '冷静', state: '我的月订阅被扣了两次款。可以帮我核对这两笔付款吗？', expected: { frustration: 0 } },

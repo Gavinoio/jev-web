@@ -115,7 +115,7 @@ const route = computed(() => {
           <button v-for="e in visibleExamples" :key="e.index" class="chip" :class="{ on: ei === e.index }" @click="pickExample(e.index)">{{ e.shortLabel }}</button>
           <button class="run" :disabled="loading" @click="run">{{ loading ? '判定中…' : res && !res.ok ? '↻ 重试请求' : 'Run request' }}</button>
         </div>
-        <div class="dlabel">QUESTIONS · 是非 + 单选 + 评分，一次提交</div>
+        <div class="dlabel">QUESTIONS · 是非 + 单选 + 打分，一次提交</div>
         <div class="qbox ticket-question-box">
           <QView :questions="sc.questions" compact hide-legend />
         </div>

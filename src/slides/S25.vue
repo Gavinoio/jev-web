@@ -2,7 +2,7 @@
 <template>
   <section class="slide story-slide">
 <h1>写题不是填字段：把模糊边界写清楚</h1>
-<div class="eyebrow">上手 · 同一条工单，换个问法，结果就更可靠</div>
+<div class="eyebrow">上手 ④ · 同一条工单，换个问法，结果就更可靠</div>
 <div class="story-body">
 <div class="question-sample">玩家原话：<b>“充值扣款了，但道具一直没到账。”</b></div>
 <div class="qa-compare">

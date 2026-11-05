@@ -11,8 +11,8 @@ const rows: Row[] = [
   { name: 'Claude Haiku 5.5', vendor: 'Anthropic', tier: '轻量', inP: 0.1, outP: 0.5 },
   { name: 'GPT-6 Luna', vendor: 'OpenAI', tier: '轻量', inP: 0.1, outP: 0.5 },
   { name: 'GLM-5.3-Flash', vendor: '智谱', tier: '轻量', inP: 0.15, outP: 0.5 },
-  { name: 'DeepSeek V4.1 Flash', vendor: 'DeepSeek', tier: '轻量', inP: 0.15, outP: 0.6, note: '非高峰' },
-  { name: 'DeepSeek V4 Pro', vendor: 'DeepSeek', tier: '旗舰', inP: 0.66, outP: 1.98, note: '非高峰' },
+  { name: 'DeepSeek V4.1 Flash', vendor: 'DeepSeek', tier: '轻量', inP: 0.15, outP: 0.6, note: '非高峰价' },
+  { name: 'DeepSeek V4 Pro', vendor: 'DeepSeek', tier: '旗舰', inP: 0.66, outP: 1.98, note: '非高峰价' },
   { name: 'GLM-5.3', vendor: '智谱', tier: '旗舰', inP: 1.4, outP: 4.4 },
   { name: 'Claude Sonnet 5.5', vendor: 'Anthropic', tier: '旗舰', inP: 2, outP: 10 },
   { name: 'GPT-6.1 Sol', vendor: 'OpenAI', tier: '旗舰', inP: 2, outP: 10 },
@@ -59,7 +59,7 @@ const times = (r: Row) => (r.hot ? '基准' : (cost(r) / base >= 10 ? Math.round
       </span>
       <span class="r mono pc-x">{{ times(r) }}</span>
     </div>
-    <div class="pc-foot">单价：美元 / 100 万 Token，官方 API 标准价，不含税</div>
+    <div class="pc-foot">单价：美元 / 100 万 Token，官方 API 标准价（DeepSeek 为非高峰时段价），不含税</div>
   </div>
 </template>
 

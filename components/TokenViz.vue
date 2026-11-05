@@ -20,7 +20,7 @@ const cls = ['a', 'b', 'c']
     <div style="margin:8px 0">
       <span v-for="(t, i) in samples[k].toks" :key="i" class="tok" :class="cls[i % 3]">{{ t }}</span>
     </div>
-    <div class="kpi" style="font-size:34px">{{ samples[k].toks.length }}<small>个 token</small></div>
+    <div class="kpi" style="font-size:34px">{{ samples[k].toks.length }}<small> 个 token</small></div>
     <div class="note">真实切分因模型而异；可在 platform.openai.com/tokenizer 现场试</div>
   </div>
 </template>
