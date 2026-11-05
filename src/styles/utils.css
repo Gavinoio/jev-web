@@ -1,0 +1,8 @@
+/* 页面里用到的几个短类名工具类（如 .pl = padding-left: 1rem），各页直接写在 class 里。
+   页面效果依赖它们。在 theme.css 之后加载。 */
+.pl { padding-left: 1rem; }
+.pr { padding-right: 1rem; }
+.pt { padding-top: 1rem; }
+.b { border-width: 1px; }
+.rd { border-radius: .25rem; }
+.tab { tab-size: 4; }

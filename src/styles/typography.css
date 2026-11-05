@@ -1,0 +1,44 @@
+/* 基础排版：标题、段落、列表、表格、代码块等通用样式。在 theme.css 之前加载，由主题覆盖。 */
+
+.slide { font-size: 1.1rem; }
+.slide :is(pre, code) { user-select: text; }
+.slide code { font-family: var(--mono); }
+
+.slide h1 { font-size: 2.25rem; line-height: 2.5rem; margin-bottom: 1rem; margin-left: -0.05em; margin-right: 0; }
+.slide h2 { font-size: 1.875rem; line-height: 2.25rem; }
+.slide h3 { font-size: 1.5rem; line-height: 2rem; }
+.slide h4 { font-size: 1.25rem; line-height: 1.75rem; }
+.slide h5 { font-size: 1rem; line-height: 1.5rem; }
+.slide h6 { font-size: .875rem; line-height: 1.25rem; padding-top: .25rem; text-transform: uppercase; letter-spacing: .1em; font-weight: 500; margin-left: -0.05em; opacity: .4; }
+
+.slide p { margin-top: 1rem; margin-bottom: 1rem; line-height: 1.5rem; }
+.slide ul { list-style: square; }
+.slide ol { list-style: decimal; }
+.slide li { line-height: 1.8em; margin-left: 1.1em; padding-left: .2em; margin-right: 0; padding-right: 0; }
+
+.slide h1 + p { margin-top: -0.5rem; opacity: .5; margin-bottom: 1rem; }
+.slide :is(p, ul, table) + h2 { margin-top: 2.5rem; }
+
+.slide table { width: 100%; }
+.slide tr { border-bottom-width: 1px; border-color: rgba(156, 163, 175, .2); }
+.slide th { text-align: left; font-weight: 400; }
+.slide :is(td, th) { padding: .75rem .5rem; }
+.slide a { border-bottom: 1px dashed currentColor; }
+.slide :is(b, strong) { font-weight: 600; }
+
+/* 封面布局（第 1 页） */
+.slide.cover { height: 100%; display: grid; }
+.slide.cover h1 { font-size: 3.75rem; line-height: 5rem; }
+/* center 布局（致谢页） */
+.slide.center { height: 100%; }
+.my-auto { margin-top: auto; margin-bottom: auto; }
+.w-full { width: 100%; }
+
+/* 代码块外层 */
+.slide .code-wrapper { position: relative; margin: 4px 0 !important; }
+
+/* 行内代码 */
+.slide :not(pre) > code { font-size: .9em; background: #1b1b1b; border-radius: 4px; padding: .125rem .375rem; font-weight: 300; }
+
+/* 代码块默认样式；高亮颜色已写在各页 HTML 里（shiki vitesse-dark） */
+.slide pre.code { font-family: var(--mono); padding: 8px; font-size: 12px; line-height: 18px; border-radius: 4px; overflow: auto; margin: 4px 0; }

@@ -1,0 +1,78 @@
+/* 外壳样式：演讲模式（缩放画布）与阅读模式（竖向长页面）。页面内容样式在 theme.css。 */
+
+html { font-family: 'Microsoft YaHei', 'PingFang SC', system-ui, sans-serif; }
+/* 等宽字体里的中文：页面是 lang="zh-CN"，不写明的话 Windows 上会回退到宋体，原版回退的是微软雅黑 */
+:root { --mono: Consolas, 'Cascadia Mono', 'SFMono-Regular', 'Microsoft YaHei', 'PingFang SC', monospace; }
+.slide { box-sizing: border-box; }
+
+/* ───────── 演讲模式：1120×630 画布按窗口等比缩放 ───────── */
+.presenting { position: fixed; inset: 0; overflow: hidden; background: var(--bg); }
+.presenting .stage { position: absolute; transform-origin: 0 0; }
+.presenting .slide { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; }
+
+.pnav {
+  position: fixed; right: 16px; bottom: 14px; z-index: 50;
+  display: flex; align-items: center; gap: 6px;
+  padding: 4px 6px; border: 1px solid var(--line); border-radius: 999px;
+  background: rgba(7, 11, 20, .78); color: var(--tx2); font: 12px var(--mono);
+  opacity: .25; transition: opacity .2s;
+}
+.pnav:hover, .pnav:focus-within { opacity: 1; }
+.pnav span { min-width: 52px; text-align: center; }
+.pnav button { width: 28px; height: 28px; border-radius: 50%; color: var(--tx); font-size: 18px; line-height: 1; cursor: pointer; }
+.pnav button:hover:not(:disabled) { background: rgba(56, 189, 248, .18); color: var(--cy); }
+.pnav button:disabled { opacity: .3; cursor: default; }
+
+/* ───────── 阅读模式：每页按屏幕宽度自然排版，所有页面连成一条竖向长页面 ───────── */
+.reading .stage { position: static; }
+.reading .slide {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 40px 16px 36px !important;
+  overflow: visible;
+  border-bottom: 1px solid var(--line);
+}
+.reading .slide::before { top: 44px; left: 0; }
+/* 每页右上角的页码 */
+.reading .slide::after {
+  content: attr(data-no);
+  position: absolute; top: 14px; right: 16px;
+  color: var(--tx3); font: 11px var(--mono); letter-spacing: 1px;
+}
+/* 竖向排版时不再靠 auto 外边距把内容推到画布中间 */
+.reading .slide > * { margin-top: 0; margin-bottom: 0; }
+.reading .slide > h1 { margin-bottom: 6px !important; }
+.reading .slide > .eyebrow { margin-bottom: 16px !important; }
+.reading .slide > .takeaway { margin-top: 18px; }
+.reading .slide img { max-width: 100%; height: auto; }
+/* 第 26 页：浅色输入框演示像一个应用窗口放在深色网格上，高度填满标题下方的剩余空间 */
+.shift-demo-slide > .eyebrow { margin-bottom: 12px !important; }
+.presenting .shift-demo-slide .shift-shell { flex: 1 1 0; height: auto; min-height: 0; }
+.reading .shift-demo-slide .shift-shell { height: 560px; }
+/* 第 13 页：标记在 90% 处，标签居中会在窄屏上超出右边，改为右对齐到标记 */
+.reading .ctl-mark em { left: auto; right: -6px; transform: none; }
+
+/* 封面：标题区在前、配图在后 */
+.reading .cover-slide { padding-top: 56px !important; padding-bottom: 48px !important; }
+.reading .cover-slide .cv { margin: 0; }
+.reading .slide.cover .cv h1 { font-size: 38px; line-height: 1.2; }
+
+/* 演示：结果区按内容撑开，不再按剩余高度压缩 */
+.reading .demo-slide > .demo { max-height: none !important; overflow: visible !important; margin-top: 4px !important; }
+/* 演讲模式下标题左侧的缩进，阅读模式不需要 */
+.reading .slide.demo-slide > h1 { padding-left: 0 !important; }
+/* “离线模拟”标签放回正常流里，不再压住题型标签 */
+.reading .demo > .demo-timing { position: static; justify-content: flex-end; margin: 0 0 8px; }
+
+.read-progress {
+  position: fixed; left: 0; top: 0; z-index: 60;
+  width: 100%; height: 3px; transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--cy), var(--pu));
+}
+
+/* ───────── 图片放大 ───────── */
+.zoom { position: fixed; inset: 0; z-index: 9999; background: rgba(2, 6, 14, .92); display: flex; align-items: center; justify-content: center; cursor: zoom-out; }
+.zoom > img { max-width: 94vw; max-height: 92vh; border-radius: 10px; box-shadow: 0 10px 60px rgba(0, 0, 0, .6); background: #fff; }
+.zoom-hint { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); color: #8da2c0; font-size: 13px; }
+.slide img:not(.pc-logo) { cursor: zoom-in; }

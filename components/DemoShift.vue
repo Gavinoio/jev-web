@@ -1,4 +1,4 @@
-<!-- Adapted from anishfn/shapeshift (MIT): Chinese copy, Vue/Slidev UI and local parsers. -->
+<!-- Adapted from anishfn/shapeshift (MIT): Chinese copy, Vue UI and local parsers. -->
 <script setup lang="ts">
 import { ref, computed, watch, onBeforeUnmount, onMounted, nextTick } from 'vue'
 import { CalendarDays, Bell, ListChecks, Timer, Sun, Palette, Users, Wallet, Ruler, Calculator, Plane, Vote, Contact, Link2, CalendarClock, Globe, Dices, Target, StickyNote, Search, MapPin } from '@lucide/vue'
@@ -558,8 +558,8 @@ onBeforeUnmount(() => {
 .result-card.ghost button, .result-card.ghost input, .result-card.ghost select { pointer-events: none; }
 .card-topline { min-height: 29px; margin: 0 0 12px; }
 .card-kind { gap: 8px; }.kind-icon { width: 30px; height: 30px; border-radius: 8px; background: #f4f4f2; color: #1a1a19; }.kind-icon svg { width: 16px; height: 16px; stroke-width: 1.75; }
-.slidev-layout .card-kind h2 { margin: 0; color: #57564f; font-size: 10px; font-weight: 500; }
-.slidev-layout .card-title { margin: 0 0 10px; color: #1a1a19; font-size: 12px; font-weight: 600; }
+.slide .card-kind h2 { margin: 0; color: #57564f; font-size: 10px; font-weight: 500; }
+.slide .card-title { margin: 0 0 10px; color: #1a1a19; font-size: 12px; font-weight: 600; }
 .card-actions { display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 23px; margin-top: 14px; color: #706e68; font-size: 9px; }
 .card-actions kbd { font-size: 8px; background: #f4f4f2; border: 0; }
 .save-button { min-height: 22px; padding: 4px 10px; border: 0; border-radius: 999px; color: #fff; background: #1a1a19; font-size: 9px; }
@@ -570,7 +570,7 @@ onBeforeUnmount(() => {
 .missing-chip { padding: 3px 7px; border: 1px dashed #d6d4cf; border-radius: 999px; background: transparent; color: #706e68; font: inherit; font-size: 9px; cursor: pointer; }
 .reminder-body, .edit-controls, .color-preview { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .reminder-body .card-title { margin: 0; }.edit-controls { color: #706e68; font-size: 9px; }.edit-controls input, .edit-controls select, .conversion select { max-width: 85px; border: 0; border-radius: 7px; padding: 4px; background: #f4f4f2; color: #57564f; font: inherit; }.edit-controls button, .conversion button { border: 0; border-radius: 6px; padding: 4px 6px; background: #f4f4f2; color: #57564f; cursor: pointer; }
-.color-preview { justify-content: flex-start; }.color-preview div { width: 44px; height: 44px; border-radius: 8px; }.slidev-layout .color-preview b { color: #1a1a19; }.shade-list { display: flex; gap: 4px; margin: 10px 0; }.shade-list button { width: 27px; height: 27px; border: 0; border-radius: 5px; cursor: pointer; }.slider-label { display: flex; align-items: center; gap: 8px; color: #706e68; font-size: 9px; }.slider-label input { width: 140px; accent-color: #1a1a19; }
+.color-preview { justify-content: flex-start; }.color-preview div { width: 44px; height: 44px; border-radius: 8px; }.slide .color-preview b { color: #1a1a19; }.shade-list { display: flex; gap: 4px; margin: 10px 0; }.shade-list button { width: 27px; height: 27px; border: 0; border-radius: 5px; cursor: pointer; }.slider-label { display: flex; align-items: center; gap: 8px; color: #706e68; font-size: 9px; }.slider-label input { width: 140px; accent-color: #1a1a19; }
 .choice-inline { width: min(375px, 100%); margin: 8px auto; }.source-hint { width: min(375px, 100%); margin: 6px auto; text-align: right; color: #706e68; font-size: 8px; }.source-hint button { margin-left: 5px; }
 .saved-stack { width: min(375px, 100%); margin: 8px auto; display: grid; gap: 5px; }.saved-row { display: flex; align-items: center; border: 1px solid #e8e7e4; border-radius: 12px; background: #fff; }.saved-open { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1; padding: 9px; border: 0; background: transparent; color: #57564f; text-align: left; cursor: pointer; }.saved-open svg { width: 16px; height: 16px; flex: none; }.saved-open span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }.saved-delete { border: 0; padding: 8px 12px; background: transparent; color: #888; cursor: pointer; }.toast button { margin-left: 8px; color: white; text-decoration: underline; }
 .primary-action { border-color: #1a1a19; background: #1a1a19; }.secondary-action, .soft-action { border-color: #e8e7e4; color: #57564f; background: #f4f4f2; }.habit-days button.checked { color: #fff; border-color: #1a1a19; background: #1a1a19; }.task-row input { accent-color: #1a1a19; }.goal-track { background: #f4f4f2; }.goal-track i { background: #1a1a19; }.money-hero, .conversion, .calculation, .timer-time, .random-view b, .goal-count, .timezone-compare b { color: #1a1a19; }.detail-grid b { color: #57564f !important; }
