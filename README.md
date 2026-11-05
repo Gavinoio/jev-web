@@ -12,6 +12,10 @@ npm run preview        # 本地预览打包结果
 npm test               # 离线模拟与解析器的单元测试
 ```
 
+## 部署
+
+推送到 GitHub `main` 分支后，Cloudflare Pages 项目 `jev-talk` 自动执行 `npm run build` 并发布 `dist/`，几十秒后 https://jev.huangguanhao.com 就是新版。不需要手动部署。
+
 ## 两种模式
 
 同一份页面按屏幕宽度自动切换：
