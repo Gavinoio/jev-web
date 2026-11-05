@@ -37,58 +37,17 @@ class: agenda-slide
 # 今天的路线
 
 <div class="agenda-page">
-  <div class="agenda-subtitle">AGENDA · 从 AI 基础到认识 Jev，再到实际应用</div>
-
-  <div class="agenda-grid">
-    <article class="agenda-item">
-      <div class="agenda-item-heading"><span>01</span><h2>AI 基础知识</h2></div>
-      <p>大模型 · Token · Prompt · Agent</p>
-    </article>
-    <article class="agenda-item">
-      <div class="agenda-item-heading"><span>02</span><h2>认识 Jev 与判断结果</h2></div>
-      <p>模型定位 · 四种题型 · 输入输出</p>
-    </article>
-    <article class="agenda-item">
-      <div class="agenda-item-heading"><span>03</span><h2>为什么值得比较</h2></div>
-      <p>延迟 · 成本 · 把握度</p>
-    </article>
-    <article class="agenda-item">
-      <div class="agenda-item-heading"><span>04</span><h2>外部案例</h2></div>
-      <p>Agent · 新闻筛选 · 招聘初筛</p>
-    </article>
-    <article class="agenda-item">
-      <div class="agenda-item-heading"><span>05</span><h2>我们的业务怎么试</h2></div>
-      <p>方案选型 · 接口与字段 · 写题规则</p>
-    </article>
-    <article class="agenda-item">
-      <div class="agenda-item-heading"><span>06</span><h2>交互演示与总结</h2></div>
-      <p>变形输入框 · 带走三句话</p>
-    </article>
+  <div class="agenda-subtitle">AGENDA · 从 AI 基础到认识 Jev，再到怎么用起来</div>
+  <div class="route-line"><div class="route-stop cy"><div class="route-dot">01</div><h2>AI 基础知识</h2><p>大模型 · Agent · MCP</p><div class="route-meta"><span class="route-pages">P3–7</span></div></div><div class="route-stop cy"><div class="route-dot">02</div><h2>认识 Jev</h2><p>定位 · 四种题型</p><div class="route-meta"><span class="route-pages">P8–10</span><span class="route-demo">▶ 演示 1</span></div></div><div class="route-stop pu"><div class="route-dot">03</div><h2>为什么值得比较</h2><p>快 · 省 · 可控</p><div class="route-meta"><span class="route-pages">P11–14</span><span class="route-demo">▶ 演示 2</span></div></div><div class="route-stop pu"><div class="route-dot">04</div><h2>外部案例</h2><p>三个真实案例</p><div class="route-meta"><span class="route-pages">P15–17</span></div></div><div class="route-stop gn"><div class="route-dot">05</div><h2>怎么用起来</h2><p>选型 · 上手 · 写题</p><div class="route-meta"><span class="route-pages">P18–25</span></div></div><div class="route-stop gn"><div class="route-dot">06</div><h2>演示与总结</h2><p>输入框 · 三句话</p><div class="route-meta"><span class="route-pages">P26–27</span><span class="route-demo">▶ 演示 3</span></div></div></div>
+  <div class="agenda-question">
+    <div class="agenda-question-label">✦ 今天带着一个问题听</div>
+    <p>日常 AI 应用里，有多少任务其实<b>只需要模型做一个判断或选择</b>？</p>
+    <div class="agenda-question-note">▶ 三个交互演示都是离线预设，用来看懂输出形式；外部案例会标明数据来源和测量边界。</div>
   </div>
-
-  <div class="agenda-highlights">
-    <article class="agenda-highlight agenda-highlight--demo">
-      <div class="agenda-label"><span class="agenda-icon" aria-hidden="true">▶</span>INTERACTIVE DEMO ×3</div>
-      <h2>交互演示 · 离线预设</h2>
-      <p>看懂题型、工单分流和变形输入框；不作为模型性能测试。</p>
-    </article>
-    <article class="agenda-highlight agenda-highlight--point">
-      <div class="agenda-label"><span class="agenda-icon" aria-hidden="true">✦</span>THE POINT</div>
-      <h2>一个核心问题</h2>
-      <p>日常 AI 应用中，有多少任务其实只需要模型做一个判断或选择？</p>
-    </article>
-    <article class="agenda-highlight agenda-highlight--reality">
-      <div class="agenda-label"><span class="agenda-icon" aria-hidden="true">⚖</span>REALITY CHECK</div>
-      <h2>客观看待</h2>
-      <p>区分官方披露、作者实验与现场离线模拟，了解能力、局限和适用场景。</p>
-    </article>
-  </div>
-
-  <div class="agenda-takeaway">今天不只介绍 Jev 是什么，更重要的是弄清楚：它能解决什么问题，什么时候值得用。</div>
 </div>
 
 <!--
-按六个主题带过议程：先用五页对齐 AI 基础，再介绍 Jev 的定位、题型与输入输出，接着比较延迟、成本和把握度，结合外部案例讨论选型、接口使用与验证落地，最后用变形输入框和总结收束。三个交互演示分别展示输出形式、分流和自适应 UI，全部是离线预设，不调用真实 Jev。
+按路线上的六站带过议程，每站下面标了页码，演示页用黄色标出：先用五页对齐 AI 基础，再介绍 Jev 的定位、题型与输入输出，接着比较延迟、成本和把握度，结合外部案例讨论选型、接口使用与验证落地，最后用变形输入框和总结收束。三个交互演示分别展示输出形式、分流和自适应 UI，全部是离线预设，不调用真实 Jev。
 外部案例保留来源和测量边界。今天不是证明 Jev 总比其他方案强，而是识别值得验证的判断任务。
 -->
 
@@ -99,12 +58,12 @@ class: agenda-slide
 <div class="eyebrow">先备知识 · 大模型（LLM）</div>
 
 <div class="cols c12" style="align-items:center">
-<div>
-
-- **大模型**（Large Language Model）回答问题时，并不是一次想好整段答案，而是根据前面的内容，一步步预测接下来该写什么
-- 每生成一点内容，就接着预测后面的内容，直到形成完整回答。这个过程叫作 自回归生成
-- 回答像打字机一样逐渐出现（流式输出），内容越长，通常越慢、越贵
-
+<div class="nw-steps">
+<p class="nw-lead"><b>大模型</b>（LLM）回答问题，不是一次想好整段，而是一个字一个字往外写：</p>
+<div class="nw-step"><span>01</span><div><b>看前文</b><small>读完已经写出来的全部内容</small></div></div>
+<div class="nw-step"><span>02</span><div><b>猜下一个字</b><small>给每个候选打分，挑一个——右边就是这一步</small></div></div>
+<div class="nw-step"><span>03</span><div><b>接上再猜</b><small>把新字接到末尾，重复，直到写完</small></div></div>
+<p class="nw-note">所以回答像打字机一样逐字出现：<b>写得越长，越慢、越贵</b>。</p>
 </div>
 <NextWord />
 </div>
@@ -122,19 +81,27 @@ class: agenda-slide
 
 <div class="eyebrow">先备知识 · Token 与上下文</div>
 
-<div class="cols c2" style="align-items:center">
+<div class="cols c2 tc-cols">
+<div class="card cy tc-card">
+<div class="tag">TOKEN · 词元</div>
+<h3>模型读的不是“字”，是<b>片段</b></h3>
+<p class="tc-sub">计费和长度上限都按 token 算。</p>
 <TokenViz />
-<div>
-
-### Token（词元）= 模型的"计费字节"
-- 模型读的不是"字"，是**片段**；费用和长度限制都按 token 计算
-- 不同语言切分方式不同；具体费用看模型的输入、输出单价
-
-### 上下文（Context Window，上下文窗口）= 一块"白板"
-- 一次请求能带多少材料，受上下文长度限制
-- 对话要保持上下文时，通常会把相关历史一并放进请求
-- 过长或无关内容可能影响判断，先裁剪并用样本验证
-
+<ul class="tc-points"><li>中英文切法不同，同一句话的 token 数也不同</li><li>费用 ≈ 输入 token × 输入单价 + 输出 token × 输出单价</li></ul>
+</div>
+<div class="card pu tc-card">
+<div class="tag">CONTEXT WINDOW · 上下文窗口</div>
+<h3>一次请求<b>最多能装多少</b>内容</h3>
+<p class="tc-sub">上下文窗口 = 单次请求的 token 上限；说明、历史、材料、回答<b>全都算在里面</b>。</p>
+<div class="ctx-req">
+<div class="ctx-req-h">一次请求实际发给模型的内容<small>数字为示意</small></div>
+<div class="ctx-row"><span>系统说明</span><b>200</b></div>
+<div class="ctx-row"><span>历史对话（前 10 轮）</span><b>6,000</b></div>
+<div class="ctx-row"><span>本次工单 + 题目</span><b>400</b></div>
+<div class="ctx-row"><span>留给回答</span><b>500</b></div>
+<div class="ctx-total"><span>合计 <b>7,100</b> / 上限 <b>8,000</b> token</span><span class="ctx-meter"><i style="width:89%"></i></span><em>89%</em></div>
+</div>
+<ul class="tc-points"><li>再多聊几轮就会超出上限：最早的对话会被截掉或压缩</li><li>无关内容不仅占地方，还可能干扰判断——先裁剪，再验证</li></ul>
 </div>
 </div>
 
@@ -303,21 +270,16 @@ Harness：没有官方标准，是业界对“模型外面那层运行程序”�
 <div>
 <img class="shot" src="/img/compare.jpg" />
 </div>
-<div class="jev-definition-cards">
-<section class="card">
-  <div class="tag">01 · 它是什么？</div>
-  <h3>专门做快速判断的 AI 模型</h3>
-  <p>Jev 是 TypeSafe AI 推出的 System One 模型，返回程序可用的判断结果，而不是长篇回答。</p>
+<div class="jev-def2">
+<section class="jd-card cy">
+<div class="jd-tag">✓ 它是什么</div>
+<h3>专门做判断的 AI 模型</h3>
+<p>TypeSafe AI 推出的 System One 模型：只返回<b>判断结果和概率</b>，程序直接读取。</p>
 </section>
-<section class="card">
-  <div class="tag">02 · 用一个工单贯穿今天</div>
-  <h3>“充值后没到账，该找谁？”</h3>
-  <p>程序需要的是部门、紧急程度和复核信号，不一定需要一段客服回复。</p>
-</section>
-<section class="card">
-  <div class="tag">03 · 它不是什么？</div>
-  <h3>不是聊天助手，也不是完整 Agent</h3>
-  <p>不负责写文章或执行退款；它给判断，程序按规则决定后续动作。</p>
+<section class="jd-card rd">
+<div class="jd-tag">✗ 它不是什么</div>
+<h3>不是聊天助手，也不是 Agent</h3>
+<p>不写回复、不执行退款；它给判断，<b>动作由程序决定</b>。</p>
 </section>
 </div>
 </div>
@@ -325,7 +287,7 @@ Harness：没有官方标准，是业界对“模型外面那层运行程序”�
 <div class="takeaway">Jev 做判断，程序定动作。接下来看看：这些判断能用哪些题型表达，又会返回什么结果？</div>
 
 <!--
-基础概念已经对齐，现在介绍 Jev 的定位。用玩家充值不到账举例：部门分类和是否紧急是判断，回复用户是生成，查询订单和退款是工具与业务动作。今天用客服工单串起这些差别。
+基础概念已经对齐，现在介绍 Jev 的定位。用玩家充值不到账举例：部门分类和是否紧急是判断，回复用户是生成，查询订单和退款是工具与业务动作。
 过渡：明确它负责判断、不负责执行之后，下一页看四种题型和对应输出。
 -->
 
@@ -335,26 +297,42 @@ Harness：没有官方标准，是业界对“模型外面那层运行程序”�
 
 <div class="eyebrow">认识 Jev · 题型</div>
 
-<div class="cols c2" style="align-items:center">
-<div>
-<img class="shot" src="/img/types.jpg" />
+<div class="qt-grid">
+<div class="qt-card cy">
+<div class="qt-tag">01 · NOUL · 是非题</div>
+<p class="qt-def">判断一件事是否成立，返回“是”的概率</p>
+<div class="qt-q">工单是否紧急？</div>
+<div class="qt-out">
+<div class="qt-noul"><span>是</span><i><b style="width:94%"></b></i><em>0.94</em></div>
+<small>0 = 否 ··· 1 = 是</small>
 </div>
-<div class="type-grid">
-<div class="card type-card type-card--noul">
-  <div class="tag">01　NOUL · 是非题</div>
-  <p><b>判断一件事是否成立，返回「是」的概率（0～1）。</b><br/><span class="type-example">例：工单是否紧急？→ 0.94</span></p>
 </div>
-<div class="card type-card type-card--choice">
-  <div class="tag">02　CHOICE · 单选题</div>
-  <p><b>从预设选项中选择一个，并给出各选项的概率。</b><br/><span class="type-example">例：哪个部门处理？→ billing</span></p>
+<div class="qt-card pu">
+<div class="qt-tag">02 · CHOICE · 单选题</div>
+<p class="qt-def">从预设选项里选一个，并给出每项的概率</p>
+<div class="qt-q">应该交给哪个部门？</div>
+<div class="qt-out">
+<div class="qt-opt hot"><span>billing</span><i><b style="width:90%"></b></i><em>0.90</em></div>
+<div class="qt-opt"><span>technical</span><i><b style="width:6%"></b></i><em>0.06</em></div>
+<div class="qt-opt"><span>other</span><i><b style="width:4%"></b></i><em>0.04</em></div>
 </div>
-<div class="card type-card type-card--score">
-  <div class="tag">03　SCORE · 打分题</div>
-  <p><b>根据设定的等级进行评分，结果可以是小数。</b><br/><span class="type-example">例：客户有多不满？→ 1.7 / 2</span></p>
 </div>
-<div class="card type-card type-card--box">
-  <div class="tag">04　BOX · 图像定位（实验）</div>
-  <p><b>在图片中找到指定目标，并返回它所在的位置。</b><br/><span class="type-example">例：商品在哪里？→ 返回四个边界坐标</span></p>
+<div class="qt-card gn">
+<div class="qt-tag">03 · SCORE · 打分题</div>
+<p class="qt-def">按设定的等级打分，结果可以是小数</p>
+<div class="qt-q">客户有多不满？</div>
+<div class="qt-out">
+<div class="qt-score"><i></i><b style="left:85%">1.7</b></div>
+<div class="qt-levels"><span>0 冷静</span><span>1 不满</span><span>2 愤怒</span></div>
+</div>
+</div>
+<div class="qt-card am">
+<div class="qt-tag">04 · BOX · 图像（实验）</div>
+<p class="qt-def">在图片里找到目标，返回它的四条边</p>
+<div class="qt-q">搜索栏在哪里？</div>
+<div class="qt-out">
+<div class="qt-box"><i class="l1"></i><i class="l2"></i><i class="l3"></i><b></b></div>
+<small>left 0.30 · top 0.13 · right 0.57 · bottom 0.20</small>
 </div>
 </div>
 </div>
@@ -628,7 +606,7 @@ class: story-slide
 <div class="cols c2" style="align-items:center">
 <div>
 
-1. **打开官网控制台**：<a href="https://console.typesafe.ai/home" target="_blank">https://console.typesafe.ai/home</a>
+1. **打开官网控制台**：[console.typesafe.ai/home](https://console.typesafe.ai/home){target="_blank"}
 2. **创建 Key**：在控制台生成接口密钥。
 3. **先试 Playground**：填写材料和题目，点击运行。
 4. **接入应用**：在后端调用 API 或 SDK；上线时固定模型版本（后面示例中的 `jev-latest` 仅用于演示）。

@@ -124,13 +124,13 @@ const route = computed(() => {
         <div class="dlabel">RESPONSE</div>
         <div class="ticket-response-content">
         <div v-if="err || (res && !res.ok)" class="err">出错：{{ err || res?.error }}</div>
-        <RView v-if="ans && questions" :questions="questions" :answers="ans" />
+        <RView v-if="ans && questions" :questions="questions" :answers="ans" summary />
         <div v-else-if="!err && !(res && !res.ok)" class="hint">Run request to see output</div>
         <template v-if="route">
-          <div class="dlabel" style="margin-top:8px">分流：≥ <b>{{ th.toFixed(2) }}</b> 自动　≥ <b>{{ lo.toFixed(2) }}</b> 复核（按 {{ main }} 的把握度 {{ pct(conf) }}）</div>
+          <div class="route-head">按 <b>{{ main }}</b> 的把握度 <b class="route-conf">{{ pct(conf) }}</b> 分流</div>
           <div class="sl2">
-            <label class="sll">自动放行线<input type="range" min="0.5" max="0.99" step="0.01" v-model.number="th" @input="lo = Math.min(lo, th)" /></label>
-            <label class="sll">复核线（低于它转人工）<input type="range" min="0.3" max="0.9" step="0.01" v-model.number="lo" @input="th = Math.max(th, lo)" /></label>
+            <label class="sll"><span>自动放行线 <b>≥ {{ th.toFixed(2) }}</b></span><input type="range" min="0.5" max="0.99" step="0.01" v-model.number="th" @input="lo = Math.min(lo, th)" /></label>
+            <label class="sll"><span>复核线 <b>≥ {{ lo.toFixed(2) }}</b>，低于它转人工</span><input type="range" min="0.3" max="0.9" step="0.01" v-model.number="lo" @input="th = Math.max(th, lo)" /></label>
           </div>
           <div class="route" :class="route.k">{{ route.t }}</div>
         </template>

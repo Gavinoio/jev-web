@@ -3,7 +3,8 @@ import { computed } from 'vue'
 import type { Expected } from '../utils/scenarios'
 
 // 类似官方 Playground 的返回面板：每道题一块，带概率条、把握度，以及"参考答案"对照
-const props = defineProps<{ questions: Record<string, any>; answers?: Record<string, any>; expected?: Expected }>()
+// summary：每道题只显示一行结论（题名 · 题型 · 结论 · 把握度），给需要腾出空间的页面用
+const props = defineProps<{ questions: Record<string, any>; answers?: Record<string, any>; expected?: Expected; summary?: boolean }>()
 
 const pc = (x: number) => Math.round(x * 100) + '%'
 
@@ -52,7 +53,15 @@ const blocks = computed<Block[]>(() => {
 const TYPE = { noul: 'Noul 是非', choice: 'Choice 单选', score: 'Score 打分' } as Record<string, string>
 </script>
 <template>
-  <div class="rv">
+  <div v-if="summary" class="rv rv-sum">
+    <div v-for="b in blocks" :key="b.key" class="rs">
+      <span class="rk">{{ b.key }}</span>
+      <span class="rt">{{ TYPE[b.type] || b.type }}</span>
+      <span class="rs-hl">{{ b.headline }}</span>
+      <span class="rs-c">{{ b.confidence !== undefined ? '把握度 ' + pc(b.confidence) : '' }}</span>
+    </div>
+  </div>
+  <div v-else class="rv">
     <div v-for="b in blocks" :key="b.key" class="rq">
       <div class="rqh">
         <span class="rk">{{ b.key }}</span>

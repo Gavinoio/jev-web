@@ -165,10 +165,10 @@ const rectStyle = computed(() => {
           <button v-for="(item, index) in img.targets" :key="item.target" class="chip" :class="{ on: targetIndex === index }" :aria-pressed="targetIndex === index" @click="targetIndex = index">{{ item.label }}</button>
           <button class="run" :disabled="bloading" @click="runBox">{{ bloading ? '定位中…' : bres && !bres.ok ? '↻ 重试定位' : 'Run request' }}</button>
         </div>
+        <div class="dlabel">QUESTIONS · 一个 box + 一道配套的是非题</div>
+        <div class="qbox box-questions"><QView :key="target" :questions="boxQuestions" compact /></div>
       </div>
       <div class="pr ticket-response">
-        <div class="dlabel">QUESTIONS · 一个 box + 一道配套的是非题</div>
-        <div class="qbox" style="max-height:210px"><QView :key="target" :questions="boxQuestions" compact /></div>
         <div class="dlabel">RESPONSE</div>
         <div class="ticket-response-content">
         <div v-if="bres && !bres.ok" class="err">出错：{{ bres.error }}</div>

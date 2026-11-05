@@ -75,3 +75,35 @@ test('the card state machine handles input, ghost, near ties, confirmation, and 
   assert.deepEqual(decide(forced, { value: 'reminder', probabilities: probabilities({ reminder: 0.95 }), confidence: 0.95 }, '明天和小王吃饭'), forced)
   assert.deepEqual(decide(forced, { value: 'none', probabilities: probabilities({ none: 0.9 }), confidence: 0.1 }, ''), initialMemory)
 })
+
+// 本地打分分类器：日常说法的回归样本。[输入, 期望类型, 期望界面状态]
+const everyday: [string, string, string][] = [
+  ['明天中午和小王吃饭', 'event', 'committed'], ['下周三下午三点开会', 'event', 'committed'], ['约小王周五吃饭', 'event', 'committed'],
+  ['提醒我周五交周报', 'reminder', 'committed'], ['周五别忘了交周报', 'reminder', 'committed'],
+  ['买牛奶、鸡蛋、面包', 'todo', 'committed'], ['周末要做的事：洗车 理发', 'todo', 'committed'],
+  ['午饭花了35', 'expense', 'committed'], ['打车 28 块', 'expense', 'committed'], ['咖啡 ¥32', 'expense', 'committed'],
+  ['360元4人平摊', 'split', 'committed'], ['晚饭一共480，我们5个人', 'split', 'committed'],
+  ['5公里是多少英里', 'convert', 'committed'], ['1999元打八五折', 'calc', 'committed'], ['23*47', 'calc', 'committed'],
+  ['番茄钟25分钟', 'timer', 'committed'], ['10分钟后叫我', 'timer', 'ghost'],
+  ['每天跑步30分钟', 'habit', 'committed'], ['周五吃火锅还是烧烤', 'poll', 'committed'],
+  ['距离春节还有几天', 'countdown', 'committed'], ['纽约现在几点', 'timezone', 'committed'], ['帮我掷个骰子', 'random', 'committed'],
+  ['今年读书目标12本，已经读了4本', 'goal', 'committed'], ['张三 13812345678', 'contact', 'committed'],
+  ['https://jev.huangguanhao.com', 'link', 'committed'], ['天蓝色', 'color', 'committed'],
+  ['下个月去杭州玩两天', 'travel', 'committed'], ['想法：给工单系统加自动分类', 'note', 'committed'],
+  ['我想吃饭', 'none', 'input'], ['明天', 'none', 'input'], ['明天中午', 'event', 'choose'], ['100美元换成人民币', 'none', 'input'],
+]
+
+test('the scoring classifier handles everyday phrasing and reports graded confidence', async () => {
+  const { classifyShift } = await import('../utils/shiftMock.ts')
+  for (const [text, intent, kind] of everyday) {
+    const { intent: answer } = classifyShift(text)
+    assert.equal(answer.choice, intent, text)
+    const sum = Object.values<number>(answer.probabilities).reduce((total, p) => total + p, 0)
+    assert.ok(Math.abs(sum - 1) < 1e-9, `${text} 概率之和应为 1`)
+    const memory = decide(initialMemory, { value: answer.choice, confidence: answer.confidence, probabilities: answer.probabilities }, text)
+    assert.equal(memory.ui.kind, kind, `${text} 的界面状态`)
+  }
+  // 把握度不再是固定值：强信号、弱信号、看不出来应得到不同的把握度
+  const levels = new Set(everyday.map(([text]) => classifyShift(text).intent.confidence))
+  assert.ok(levels.size >= 5, '把握度应随信号强弱变化')
+})

@@ -101,7 +101,13 @@ test('scripted typing reaches simulated states and manual selection retains cust
     assert.equal(memory.ui.kind, expected)
     if (expected === 'ghost') assert.equal(promote(memory).ui.kind, 'committed')
   }
-  assert.equal((await callJev('自定义内容', shiftQuestions)).ok, false)
+  // 无法识别的自定义文本：本地规则判为 none，界面停在输入态，等用户补充或手动选类型
+  const custom = await callJev('自定义内容', shiftQuestions)
+  assert.equal(custom.ok, true)
+  const customIntent = custom.data.answers.intent
+  assert.equal(customIntent.choice, 'none')
+  const customMemory = decide(initialMemory, { value: customIntent.choice, confidence: customIntent.confidence, probabilities: customIntent.probabilities }, '自定义内容')
+  assert.equal(customMemory.ui.kind, 'input')
   const selected = force('note', '自定义内容')
   assert.deepEqual(selected.ui, { kind: 'committed', intent: 'note', forced: true })
   assert.equal(selected.forcedText, '自定义内容')

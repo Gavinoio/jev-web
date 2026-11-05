@@ -44,7 +44,7 @@ function pick(w: string) {
 }
 </script>
 <template>
-  <div class="card cy" style="min-width: 420px">
+  <div class="card cy nextword">
     <div class="tag">猜猜下一个词是什么？</div>
     <div class="mono" style="font-size: 24px; margin: 8px 0 10px; color: var(--tx)">
       {{ steps[i].prefix }}<span style="color: var(--cy)">{{ picked ?? '▍' }}</span>

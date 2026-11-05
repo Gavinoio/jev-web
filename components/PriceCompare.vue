@@ -98,4 +98,18 @@ const times = (r: Row) => (r.hot ? '基准' : (cost(r) / base >= 10 ? Math.round
 .hot .pc-val, .hot .pc-x { color: var(--gn); font-weight: 700; }
 .pc-x { color: var(--tx2); }
 .pc-foot { margin-top: 6px; font-size: 11px; color: var(--tx3); text-align: right; }
+
+/* 手机：只保留模型、总费用条和倍数，单价在电脑版里看 */
+@media (max-width: 900px) {
+  .pc-scene { flex-wrap: wrap; gap: 6px; }
+  .pc-op { display: none; }
+  .pc-chip { flex: 1 1 140px; font-size: 13px; }
+  .pc-head, .pc-row { grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr) 38px; gap: 8px; padding: 0 6px; }
+  .pc-head > :nth-child(2), .pc-head > :nth-child(3), .pc-row > :nth-child(2), .pc-row > :nth-child(3) { display: none; }
+  .pc-row { height: auto; min-height: 30px; font-size: 13px; }
+  .pc-name { flex-wrap: wrap; row-gap: 0; white-space: normal; }
+  .pc-name small, .pc-tier { display: none; }
+  .pc-val { width: 54px; font-size: 12px; }
+  .pc-foot { text-align: left; }
+}
 </style>
