@@ -1,9 +1,9 @@
-<!-- 第 05 页：Prompt 与幻觉 -->
+<!-- 第 05 页：Prompt 与幻觉：问法决定答案，答案未必是真的 -->
 <template>
   <section class="slide prompt-slide">
 <div class="prompt-page">
-  <h1>Prompt 与幻觉</h1>
-  <div class="eyebrow">先备知识 · Prompt 与幻觉</div>
+  <h1>Prompt 与幻觉：问法决定答案，答案未必是真的</h1>
+  <div class="eyebrow">AI 基础 ③ · 写清任务能减少乱编，但不能杜绝</div>
   <div class="prompt-layout">
   <div class="prompt-grid">
     <section class="prompt-card prompt-card--blue">

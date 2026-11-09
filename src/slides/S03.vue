@@ -2,7 +2,7 @@
 <template>
   <section class="slide">
 <h1>大模型的本质：猜下一个词</h1>
-<div class="eyebrow">先备知识 · 大模型（LLM）</div>
+<div class="eyebrow">AI 基础 ① · 逐字生成，所以写得越长越慢</div>
 <div class="cols c12" style="align-items:center">
 <div class="nw-steps">
 <p class="nw-lead"><b>大模型</b>（LLM）回答问题，不是一次想好整段，而是一个字一个字往外写：</p>

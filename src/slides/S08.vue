@@ -2,7 +2,7 @@
 <template>
   <section class="slide">
 <h1>Jev 是什么：专门做判断的 AI</h1>
-<div class="eyebrow">认识 Jev · 从 AI 基础回到判断任务</div>
+<div class="eyebrow">认识 Jev ① · 不写回答，只返回判断和概率</div>
 <div class="cols c2" style="align-items:center">
 <div>
 <img class="shot" src="/img/compare.jpg" />

@@ -1,9 +1,0 @@
-<script setup lang="ts">
-withDefaults(defineProps<{ mode?: string; ms?: number; title: string; timeLabel?: string }>(), { timeLabel: '响应时长' })
-</script>
-<template>
-  <div class="dbar demo-timing">
-    <span class="dchip">离线模拟</span>
-    <span class="dspacer" />
-  </div>
-</template>

@@ -1,6 +1,7 @@
 {
   "version": "0.0.1",
   "configurations": [
-    { "name": "app", "runtimeExecutable": "npm", "runtimeArgs": ["run", "dev", "--", "--open", "false"], "port": 5180 }
+    { "name": "app", "runtimeExecutable": "npm", "runtimeArgs": ["run", "dev", "--", "--open", "false"], "port": 5180 },
+    { "name": "app-node22", "runtimeExecutable": "D:/Dev/nvm/v22.23.2/node.exe", "runtimeArgs": ["node_modules/vite/bin/vite.js", "--port", "5183", "--strictPort", "--open", "false"], "port": 5183 }
   ]
 }

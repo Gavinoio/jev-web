@@ -1,8 +1,8 @@
-<!-- 第 04 页：Token 与上下文 -->
+<!-- 第 04 页：Token 与上下文：模型按片段读、按片段计费 -->
 <template>
   <section class="slide">
-<h1>Token 与上下文</h1>
-<div class="eyebrow">先备知识 · Token 与上下文</div>
+<h1>Token 与上下文：模型按片段读、按片段计费</h1>
+<div class="eyebrow">AI 基础 ② · 一次请求能装多少内容，也按 Token 算</div>
 <div class="cols c2 tc-cols">
 <div class="card cy tc-card">
 <div class="tag">TOKEN · 词元</div>

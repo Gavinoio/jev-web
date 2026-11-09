@@ -1,10 +1,10 @@
-<!-- 第 07 页：MCP、Skill 与 Harness -->
+<!-- 第 07 页：MCP 与 Skill：给 Agent 接工具、教方法 -->
 <template>
   <section class="slide toolchain-slide">
-<h1>MCP、Skill 与 Harness</h1>
-<div class="eyebrow">先备知识 · AI Agent 的工具与运行机制</div>
+<h1>MCP 与 Skill：给 Agent 接工具、教方法</h1>
+<div class="eyebrow">AI 基础 ⑤ · 两种扩展方式，都由 Harness 加载</div>
 <div class="toolchain-body">
-<div class="cols c3 compact toolchain-cards">
+<div class="cols c2 compact toolchain-cards">
   <div class="card cy toolchain-card">
     <div class="tag">MCP · 管连接</div>
     <h3>AI 的「USB-C 接口」</h3>
@@ -25,18 +25,8 @@
       <p>把团队代码规范做成 Skill，AI 审查代码时自动照着做。</p>
     </div>
   </div>
-  <div class="card gn toolchain-card">
-    <div class="tag">HARNESS · 管运行</div>
-    <h3>AI 的「运行系统」</h3>
-    <div class="toolchain-subtitle">Agent Harness · 套在模型外面的那层程序</div>
-    <dl class="toolchain-facts"><div><dt>是什么</dt><dd>模型本身只会“读输入、出文字”；Harness 负责循环调用模型、执行工具、整理上下文。</dd></div><div><dt>谁定的</dt><dd>不是某个标准，而是一类工程做法的统称，常说 <b>Agent = 模型 + Harness</b>。</dd></div><div><dt>管什么</dt><dd>任务循环 · 工具执行 · 上下文压缩 · 权限确认</dd></div></dl>
-    <div class="toolchain-example toolchain-example--gn">
-      <div>举个例子</div>
-      <p>Claude Code、Codex CLI：读代码 → 修改 → 跑测试 → 看结果再改。</p>
-    </div>
-  </div>
 </div>
-<div class="takeaway toolchain-takeaway">MCP 负责连接工具，Skill 告诉 AI 怎么做，Harness 负责让整个任务跑起来。<br/><span style="color:var(--gn)">而 Agent 每一步都要先判断“下一步做什么”——这个判断环节，正是 Jev 可以接手的地方。</span></div>
+<div class="takeaway toolchain-takeaway">MCP 让 Agent 接上外部工具，Skill 教 Agent 按你的方法做事。<br/><span style="color:var(--gn)">而 Agent 每一步都要先判断“下一步做什么”——这个判断环节，正是 Jev 可以接手的地方。</span></div>
 </div>
   </section>
 </template>

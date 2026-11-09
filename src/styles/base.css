@@ -46,14 +46,14 @@ html { font-family: 'Microsoft YaHei', 'PingFang SC', system-ui, sans-serif; }
 .reading .slide > .eyebrow { margin-bottom: 16px !important; }
 .reading .slide > .takeaway { margin-top: 18px; }
 .reading .slide img { max-width: 100%; height: auto; }
-/* 第 26 页：输入框演示铺满整页，不要标题和网格背景 */
+/* 第 25 页：输入框演示铺满整页，不要标题和网格背景 */
 .presenting .shift-slide .shift-shell { height: 100% !important; }
 /* 窗口比例和画布不一致时，画布外的空白也用演示的浅色，而不是深色 */
 .presenting:has(.shift-slide:not([style*="display: none"])) { background: #fafaf9; }
 .slide.demo-slide.shift-slide { padding: 0 !important; }
 .reading .shift-slide .shift-shell { height: 100svh; min-height: 560px; }
 .reading .shift-slide::after { display: none; }
-/* 第 13 页：标记在 90% 处，标签居中会在窄屏上超出右边，改为右对齐到标记 */
+/* 第 18 页：标记在 90% 处，标签居中会在窄屏上超出右边，改为右对齐到标记 */
 .reading .ctl-mark em { left: auto; right: -6px; transform: none; }
 
 /* 封面：标题区在前、配图在后 */
@@ -79,3 +79,9 @@ html { font-family: 'Microsoft YaHei', 'PingFang SC', system-ui, sans-serif; }
 .zoom > img { max-width: 94vw; max-height: 92vh; border-radius: 10px; box-shadow: 0 10px 60px rgba(0, 0, 0, .6); background: #fff; }
 .zoom-hint { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); color: #8da2c0; font-size: 13px; }
 .slide img:not(.pc-logo) { cursor: zoom-in; }
+
+/* 第 10、19 页：官方 Playground 截图。演讲模式下截图填满标题下方的剩余高度；阅读模式按宽度自然显示 */
+.presenting .shots-slide { display: flex; flex-direction: column; }
+.reading .shots-slide .shots { flex: none; }
+.reading .shots-slide .shots-frame { flex: none; }
+.reading .shots-slide .shots-frame img { max-height: none; width: 100%; }

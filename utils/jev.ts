@@ -1,15 +1,10 @@
-import { batchQuestions, batchSamples, moderateExamples, moderateQuestions, scenarios, demoTicketExamples } from './scenarios.ts'
-import { boxImages, typeTabs } from './typeDemos.ts'
+// 第 25 页输入框演示用的浏览器内离线模拟：本地规则判断意图，按 Jev 的返回格式包装结果，不调用网络。
 import { shiftQuestions } from './shift.ts'
 import { classifyShift } from './shiftMock.ts'
 
-export type Mode = 'mock'
-export interface JevResult { ok: boolean; mode?: Mode; ms?: number; error?: string; data?: any; wall?: number }
+export interface JevResult { ok: boolean; mode?: 'mock'; ms?: number; error?: string; data?: any; wall?: number }
 
 const canonical = (value: any): string => JSON.stringify(value, (_key, item) => item && typeof item === 'object' && !Array.isArray(item) ? Object.fromEntries(Object.entries(item).sort(([a], [b]) => a.localeCompare(b))) : item)
-const normalizeState = (state: string) => {
-  try { return canonical(JSON.parse(state)) } catch { return state }
-}
 
 function answer(question: any, value: boolean | string | number, confidence = 0.95) {
   if (question.type === 'noul') return { type: 'noul', noul: typeof value === 'boolean' ? (value ? 0.95 : 0.05) : value }
@@ -24,55 +19,13 @@ function answer(question: any, value: boolean | string | number, confidence = 0.
   return { type: 'score', score: Number(value), confidence: scoreConfidence, legend: Object.fromEntries(levels.map((level, i) => [i, level])), probabilities: Object.fromEntries(levels.map((_, i) => [i, i === index ? scoreConfidence : (1 - scoreConfidence) / (levels.length - 1)])) }
 }
 
-const fixtures: { state: string; questions: Record<string, any>; values: Record<string, boolean | string | number>; confidence?: number }[] = []
-for (const tab of typeTabs) for (const example of tab.examples) if (example.expected) fixtures.push({ state: example.state, questions: tab.questions, values: example.expected as Record<string, boolean | string | number> })
-for (const scenario of scenarios) for (const example of scenario.examples) {
-  let values = example.expected as Record<string, boolean | string | number> | undefined
-  if (scenario.id === 'ticket' && example.label === demoTicketExamples.ambiguous.label) values = { is_urgent: false, department: 'sales', frustration: 1 }
-  if (scenario.id === 'ticket' && example.label === '帮我看看这个') values = { is_urgent: false, department: 'technical', frustration: 0 }
-  if (scenario.id === 'refund' && example.label === '含糊') values = { request_type: 'other', wants_refund: false }
-  if (scenario.id === 'vip' && values) values = { churn_risk: example.label.includes('很生气') ? 2 : 0, ...values }
-  if (values) fixtures.push({ state: example.state, questions: scenario.questions, values, confidence: example.expected ? 0.95 : 0.5 })
-}
-for (const example of moderateExamples) fixtures.push({ state: example.state, questions: moderateQuestions, values: example.expected as Record<string, boolean | string | number> || { harassment: 0.45, scam: 0.1, action: 'allow' }, confidence: example.expected ? 0.95 : 0.5 })
-for (const sample of batchSamples(100)) fixtures.push({ state: sample.text, questions: batchQuestions, values: { category: sample.expected } })
-
-function cancelled(signal?: AbortSignal): JevResult | undefined {
-  return signal?.aborted ? { ok: false, mode: 'mock', error: '操作已取消' } : undefined
-}
-
 export async function callJev(state: string, questions: Record<string, any>, signal?: AbortSignal): Promise<JevResult> {
-  const aborted = cancelled(signal)
-  if (aborted) return aborted
-  if (canonical(questions) === canonical(shiftQuestions)) {
-    const classified = classifyShift(state)
-    const answers = Object.fromEntries(Object.entries(questions).map(([key, question]) => [key, answer(question, classified.values[key])]))
-    answers.intent = classified.intent
-    return { ok: true, mode: 'mock', data: { model: 'offline-rules', answers }, ms: 0, wall: 0 }
-  }
-  const fixture = fixtures.find((item) => normalizeState(item.state) === normalizeState(state) && canonical(item.questions) === canonical(questions))
-  if (!fixture) return { ok: false, mode: 'mock', error: '离线模拟仅支持预设材料和原始题目；自定义内容无法判断。' }
-  const answers = Object.fromEntries(Object.entries(questions).map(([key, question]) => [key, answer(question, fixture.values[key], fixture.confidence)]))
-  return { ok: true, mode: 'mock', data: { model: 'offline-mock', answers }, ms: 0, wall: 0 }
+  if (signal?.aborted) return { ok: false, mode: 'mock', error: '操作已取消' }
+  if (canonical(questions) !== canonical(shiftQuestions)) return { ok: false, mode: 'mock', error: '离线模拟只支持输入框演示的题目。' }
+  const classified = classifyShift(state)
+  const answers: Record<string, any> = Object.fromEntries(Object.entries(questions).map(([key, question]) => [key, answer(question, classified.values[key])]))
+  answers.intent = classified.intent
+  return { ok: true, mode: 'mock', data: { model: 'offline-rules', answers }, ms: 0, wall: 0 }
 }
 
-const boxes = [
-  { left: 0.301, top: 0.127, right: 0.566, bottom: 0.197 },
-  { left: 0.275, top: 0.528, right: 0.399, bottom: 0.644 },
-  { left: 0.045, top: 0.305, right: 0.224, bottom: 0.88 },
-]
-export async function callBox(image: string, target: string, signal?: AbortSignal): Promise<JevResult> {
-  const aborted = cancelled(signal)
-  if (aborted) return aborted
-  const index = image === 'agent.jpg' ? boxImages[0].targets.findIndex((item) => item.target === target) : -1
-  if (index < 0) return { ok: false, mode: 'mock', error: '离线模拟仅支持预设图片和目标；无法定位自定义目标。' }
-  return { ok: true, mode: 'mock', ms: 0, wall: 0, data: { model: 'offline-mock', answers: { visible: { type: 'noul', noul: 0.95 }, target: { type: 'box', box: { ...boxes[index] }, confidence: 0.95 } } } }
-}
-
-export function estTokens(s: string) {
-  const cjk = (s.match(/[一-鿿]/g) || []).length
-  return Math.round(cjk + (s.length - cjk) / 4)
-}
-export const estCost = (tokens: number) => (tokens * 0.042) / 1e6
-export const MODE_LABEL: Record<string, string> = { mock: '离线模拟' }
 export const pct = (x: number) => `${Math.round(x * 100)}%`

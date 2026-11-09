@@ -41,6 +41,7 @@ const times = (r: Row) => (r.hot ? '基准' : (cost(r) / base >= 10 ? Math.round
       <span class="pc-chip"><span>每次输出 <b>{{ OUT }}</b> Token</span><small>只回一个标签；Jev 输出免费</small></span>
     </div>
 
+    <div class="pc-table">
     <div class="pc-head">
       <span>模型</span><span class="r">输入</span><span class="r">输出</span><span>跑完 100 万次的总费用</span><span class="r">是 Jev 的</span>
     </div>
@@ -59,6 +60,7 @@ const times = (r: Row) => (r.hot ? '基准' : (cost(r) / base >= 10 ? Math.round
       </span>
       <span class="r mono pc-x">{{ times(r) }}</span>
     </div>
+    </div>
     <div class="pc-foot">单价：美元 / 100 万 Token，官方 API 标准价（DeepSeek 为非高峰时段价），不含税</div>
   </div>
 </template>
@@ -72,6 +74,8 @@ const times = (r: Row) => (r.hot ? '基准' : (cost(r) / base >= 10 ? Math.round
 .pc-chip small { font-size: 11px; color: var(--tx2); }
 .pc-op { color: var(--cy); font-family: var(--mono); font-size: 20px; }
 
+/* 对比表放进半透明面板，挡住页面网格背景 */
+.pc-table { padding: 8px 8px 9px; border: 1px solid var(--line); border-radius: 12px; background: rgba(10, 20, 38, .78); backdrop-filter: blur(6px); }
 .pc-head, .pc-row { display: grid; grid-template-columns: 300px 66px 60px 1fr 56px; gap: 12px; align-items: center; padding: 0 10px; }
 .pc-head { font-size: 12px; color: var(--tx3); letter-spacing: 1px; padding-bottom: 4px; border-bottom: 1px solid var(--line); }
 .r { text-align: right; }
@@ -107,7 +111,9 @@ const times = (r: Row) => (r.hot ? '基准' : (cost(r) / base >= 10 ? Math.round
   .pc-head, .pc-row { grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr) 38px; gap: 8px; padding: 0 6px; }
   .pc-head > :nth-child(2), .pc-head > :nth-child(3), .pc-row > :nth-child(2), .pc-row > :nth-child(3) { display: none; }
   .pc-row { height: auto; min-height: 30px; font-size: 13px; }
-  .pc-name { flex-wrap: wrap; row-gap: 0; white-space: normal; }
+  .pc-table { padding: 6px 2px; }
+  .pc-name { align-items: center; gap: 6px; white-space: normal; }
+  .pc-name b { font-size: 12.5px; line-height: 1.25; }
   .pc-name small, .pc-tier { display: none; }
   .pc-val { width: 54px; font-size: 12px; }
   .pc-foot { text-align: left; }

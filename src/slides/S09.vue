@@ -1,8 +1,8 @@
-<!-- 第 09 页：题型：是非、单选、打分、图像（实验） -->
+<!-- 第 09 页：四种题型：是非、单选、打分、图像 -->
 <template>
   <section class="slide">
-<h1>题型：是非、单选、打分、图像（实验）</h1>
-<div class="eyebrow">认识 Jev · 题型</div>
+<h1>四种题型：是非、单选、打分、图像</h1>
+<div class="eyebrow">认识 Jev ② · 题型决定返回什么；图像题仍在实验</div>
 <div class="qt-grid">
 <div class="qt-card cy">
 <div class="qt-tag">01 · NOUL · 是非题</div>
