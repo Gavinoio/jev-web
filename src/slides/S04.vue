@@ -9,7 +9,7 @@
 <h3>模型读的不是“字”，是<b>片段</b></h3>
 <p class="tc-sub">计费和长度上限都按 token 算。</p>
 <TokenViz />
-<ul class="tc-points"><li>中英文切法不同，同一句话的 token 数也不同</li><li>费用 ≈ 输入 token × 输入单价 + 输出 token × 输出单价</li></ul>
+<ul class="tc-points"><li>同一个意思，中英文的 token 数不同；长单词会被拆成好几个</li><li>费用 ≈ 输入 token × 输入单价 + 输出 token × 输出单价</li></ul>
 </div>
 <div class="card pu tc-card">
 <div class="tag">CONTEXT WINDOW · 上下文窗口</div>
