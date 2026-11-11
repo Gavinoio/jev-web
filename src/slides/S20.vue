@@ -15,7 +15,7 @@
 <BeforeAfter class="case-ba" title="作者实测 · 机票搜索耗时中位数" :before="{label:'优化前', v:9.45, text:'9.45 s'}" :after="{label:'优化后', v:7.09, text:'7.09 s'}" />
 </div>
 <div>
-<img class="shot" src="/img/jev-ultrafast-github.png" style="width:100%;max-height:300px;object-fit:cover;object-position:top" />
+<img class="shot" src="/img/jev-ultrafast-github.webp" style="width:100%;max-height:300px;object-fit:cover;object-position:top" />
 <div class="cap">Browser Use 项目仓库截图（点击放大）</div>
 </div>
 </div>

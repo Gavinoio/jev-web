@@ -5,7 +5,7 @@
 <div class="eyebrow">认识 Jev ① · 不写回答，只返回判断和概率</div>
 <div class="cols c2" style="align-items:center">
 <div>
-<img class="shot" src="/img/compare.jpg" />
+<img class="shot" src="/img/compare.webp" />
 </div>
 <div class="jev-def2">
 <section class="jd-card cy">

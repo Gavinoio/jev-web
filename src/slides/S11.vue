@@ -12,7 +12,7 @@
 </div>
 <div class="qs-bottom">
   <figure class="qs-shot">
-    <img class="shot" src="/img/console-home.png" alt="TypeSafe 控制台首页截图（点击放大）" />
+    <img class="shot" src="/img/console-home.webp" alt="TypeSafe 控制台首页截图（点击放大）" />
     <figcaption>控制台首页：Playground 入口 · 示例 · Quickstart · Token 用量（点击放大）</figcaption>
   </figure>
   <div class="qs-tips">

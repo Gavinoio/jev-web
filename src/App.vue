@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { slides } from './slides'
 
 // 两种模式，用同一份页面组件：
@@ -70,6 +70,16 @@ const onClick = (e: MouseEvent) => {
   zoomSrc.value = img.currentSrc || img.src
 }
 
+// 视频提前下载：演讲模式翻到视频页前 3 页就开始缓冲；阅读模式滚到离视频还有约两屏时开始。
+// 不在打开网页时就下载，避免和前面页面的图片抢带宽。
+const warmVideo = (v: HTMLVideoElement) => { if (v.preload !== 'auto') { v.preload = 'auto'; v.load() } }
+const warmAhead = () => {
+  const all = document.querySelectorAll<HTMLElement>('.stage > .slide')
+  for (let i = cur.value; i <= Math.min(total - 1, cur.value + 3); i++) all[i]?.querySelectorAll('video').forEach(warmVideo)
+}
+let io: IntersectionObserver | undefined
+watch(cur, () => { if (!reading.value) warmAhead() })
+
 // 窗口缩放、平板旋转时也重新判断模式（部分浏览器不会触发 matchMedia 的 change 事件）
 const onResize = () => { vw.value = window.innerWidth; vh.value = window.innerHeight; isNarrow.value = narrow.matches; onScroll() }
 const onNarrow = (e: MediaQueryListEvent) => { isNarrow.value = e.matches }
@@ -81,6 +91,9 @@ onMounted(() => {
   window.addEventListener('hashchange', onHash)
   document.addEventListener('click', onClick)
   narrow.addEventListener('change', onNarrow)
+  warmAhead()
+  io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting && reading.value) { warmVideo(e.target as HTMLVideoElement); io?.unobserve(e.target) } }), { rootMargin: '2000px 0px' })
+  document.querySelectorAll('.stage video').forEach((v) => io!.observe(v))
 })
 onBeforeUnmount(() => {
   window.removeEventListener('resize', onResize)
@@ -89,6 +102,7 @@ onBeforeUnmount(() => {
   window.removeEventListener('hashchange', onHash)
   document.removeEventListener('click', onClick)
   narrow.removeEventListener('change', onNarrow)
+  io?.disconnect()
 })
 </script>
 

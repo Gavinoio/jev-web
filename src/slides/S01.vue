@@ -11,7 +11,7 @@
 <div class="presenter"><span class="lb">分享人</span><span class="nm">黄冠豪</span><span class="dp">研发中心 / 游戏平台项目部</span></div>
 </div>
 <div class="cv-right">
-<img class="shot" src="/img/machine.jpeg" />
+<img class="shot" src="/img/machine.webp" />
 <div class="cap">Choice · Score · Yes/No</div>
 </div>
 </div>

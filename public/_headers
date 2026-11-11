@@ -1,0 +1,11 @@
+# Cloudflare Pages 缓存规则
+# 打包产物文件名带内容哈希，内容一变文件名就变，可以长期缓存
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# 图片和视频文件名固定：浏览器缓存 1 天，过期后一周内先用旧的、后台再更新
+/img/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/video/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800

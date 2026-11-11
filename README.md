@@ -28,13 +28,14 @@ npm test               # 输入框演示的离线模拟与解析器单元测试
 ## 文件
 
 - `src/slides/S01.vue` … `S28.vue`：每页一个文件，顺序在 `src/slides/index.ts`。改内容直接改对应页面；新增页面就新建文件并加到 `index.ts`。
-- `src/App.vue`：翻页、缩放、阅读模式、图片放大。
+- `src/App.vue`：翻页、缩放、阅读模式、图片放大、视频提前缓冲（翻到视频页前 3 页开始下载）。
 - `src/styles/`：`theme.css` 页面主题（深色网格背景、各页版式）；`typography.css`、`utils.css`、`reset.css` 基础排版；`base.css` 演讲模式与手机阅读模式的外壳样式。
 - `components/`：Demo 与示意图组件，全局注册，页面里直接用。
 - `utils/shift.ts`：压轴 Demo 的题目、状态机和中文解析器（日期、金额、单位、算式……）；思路来自 [anishfn/shapeshift](https://github.com/anishfn/shapeshift)（MIT，许可证在 `licenses/`）。
 - `utils/jev.ts`：第 25 页输入框演示的浏览器内离线模拟。
-- `components/ShotTabs.vue`：第 10、19 页的截图切换组件；截图在 `public/img/playground/`。
-- `public/`：图片、视频、标签页图标（取自 typesafe.ai）。`public/img/judgment-flow.svg`、`validation-loop.svg`、`intent-to-card.svg`、`news-filter.svg` 为本项目自绘的流程示意，不是模型测量结果。
+- `components/ShotTabs.vue`：第 10、19 页的截图切换组件，页面加载完后在后台预先下载全部截图；截图在 `public/img/playground/`。
+- `public/`：图片（WebP）、视频、标签页图标（取自 typesafe.ai）。原始视频是根目录的 `Jev新闻匹配演示.mp4`，`public/video/` 里是压缩到 1920 宽的版本。
+- `public/_headers`：Cloudflare Pages 的缓存规则。图片和视频文件名固定，替换同名文件后，访客最长要 1 天才看到新的；急着生效就换个文件名。
 
 ## 内容说明
 

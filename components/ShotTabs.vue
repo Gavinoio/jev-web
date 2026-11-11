@@ -1,6 +1,6 @@
 <!-- 官方 Playground 真实调用截图：按题型 / 工单切换，部分截图可切换“结果视图 / JSON” -->
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 
 type View = { label: string; src: string }
 type Tab = { label: string; tag?: string; views: View[]; note: string }
@@ -10,6 +10,14 @@ const tab = ref(0)
 const view = ref(0)
 watch(tab, () => { view.value = 0 })
 const cur = computed(() => props.tabs[tab.value])
+
+// 页面其余内容加载完后，在后台把所有题型 / JSON 截图都下载好，演讲时切换不用再等
+const warm: HTMLImageElement[] = []
+onMounted(() => {
+  const run = () => props.tabs.forEach((t) => t.views.forEach((v) => { const img = new Image(); img.src = v.src; warm.push(img) }))
+  if (document.readyState === 'complete') setTimeout(run, 300)
+  else window.addEventListener('load', () => setTimeout(run, 300), { once: true })
+})
 </script>
 
 <template>
